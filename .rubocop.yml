@@ -1,0 +1,8 @@
+AllCops:
+  Exclude:
+    - 'bin/console'
+
+  NewCops: enable
+
+Style/Documentation:
+  Enabled: false

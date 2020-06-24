@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe AspireBudgetWrapper do
   it 'has a version number' do
     expect(AspireBudgetWrapper::VERSION).not_to be nil

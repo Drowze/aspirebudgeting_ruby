@@ -1,14 +1,12 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'pry'
+require 'google_drive'
 
 require 'bundler/setup'
-require 'aspire_budget_wrapper'
+require 'aspire_budget_wrapper/client'
 
-# You can add fixtures and/or initialization code here to make experimenting
-# with your gem easier. You can also use a different console, if you like.
-
-# (If you use this, don't forget to add pry to your Gemfile!)
-# require 'pry'
-# Pry.start
-
-require 'irb'
-IRB.start(__FILE__)
+session = GoogleDrive::Session.from_config(ENV['GOOGLE_CREDENTIALS_PATH'])
+client = AspireBudgetWrapper::Client.new(session: session, spreadsheet_key: ENV['SPREADSHEET_KEY'])
+binding.pry
