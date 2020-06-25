@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     aspire_budget (0.0.1)
-      google_drive
+      google_drive (~> 3.0)
 
 GEM
   remote: https://rubygems.org/
