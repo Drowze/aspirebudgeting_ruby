@@ -1,38 +1,28 @@
 # AspireBudgetWrapper
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/aspire_budget_wrapper`. To experiment with that code, run `bin/console` for an interactive prompt.
+This is an independent project implementing a Ruby Wrapper for Aspire Budgeting spreadsheets, leveraging from the use of another great gem: `google_drive`.  
+The idea of this gem is to enable a good API to be easily implemented, allowing more powerful and complex tools to emerge.
 
-TODO: Delete this and the text above, and describe your gem
+If you don't know Aspire Budgeting please refer to: https://aspirebudget.com/
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'aspire_budget_wrapper'
-```
-
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install aspire_budget_wrapper
+todo
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+session = GoogleDrive::Session.from_config('path_to_your_credentials.json')
+client = AspireBudgetWrapper::Client.new(session: session, spreadsheet_key: 'YOUR_SPREADSHEET_KEY')
+```
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+todo
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/aspire_budget_wrapper.
+Bug reports, feature requests and pull requests are welcome.
 
 
 ## License
