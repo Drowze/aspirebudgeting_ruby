@@ -20,6 +20,11 @@ module AspireBudgetWrapper
       transactions.all
     end
 
+    def insert_transaction(params)
+      transaction = Models::Transaction.new(params)
+      transactions.insert(transaction)
+    end
+
     private
 
     def transactions
