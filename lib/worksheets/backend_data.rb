@@ -11,6 +11,10 @@ module AspireBudgetWrapper
         fetch_data(data_title: 'Categories')
       end
 
+      def category_exists?(category)
+        categories.include?(category)
+      end
+
       def fetch_data(data_title: 'Categories')
         col = (1..ws.num_cols).find_index do |i|
           ws[1, i] == data_title

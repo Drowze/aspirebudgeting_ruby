@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
+require 'utils'
+
 module AspireBudgetWrapper
   module Worksheets
     class WorksheetBase
+      include Utils
+
       def initialize(agent:)
         @agent = agent
       end

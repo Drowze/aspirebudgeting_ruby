@@ -5,7 +5,7 @@ require 'pry'
 require 'google_drive'
 
 require 'bundler/setup'
-require 'aspire_budget_wrapper/client'
+require 'client'
 
 session = GoogleDrive::Session.from_config(ENV['GOOGLE_CREDENTIALS_PATH'])
 client = AspireBudgetWrapper::Client.new(session: session, spreadsheet_key: ENV['SPREADSHEET_KEY'])

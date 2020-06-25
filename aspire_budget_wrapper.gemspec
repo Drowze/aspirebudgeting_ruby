@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'lib/aspire_budget_wrapper/version'
+require_relative 'lib/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'aspire_budget_wrapper'
