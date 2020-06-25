@@ -3,13 +3,13 @@
 require_relative 'lib/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'aspire_budget_wrapper'
-  spec.version       = AspireBudgetWrapper::VERSION
+  spec.name          = 'aspire_budget'
+  spec.version       = AspireBudget::VERSION
   spec.authors       = ['Drowze']
   spec.email         = ['gibim6+aspire@gmail.com']
 
-  spec.summary       = 'Aspire Budget Ruby Wrapper'
-  spec.description   = 'Aspire Budget Ruby Wrapper'
+  spec.summary       = 'Aspire Budget Ruby '
+  spec.description   = 'Aspire Budget Ruby '
   spec.homepage      = 'https://google.com'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.3.0')

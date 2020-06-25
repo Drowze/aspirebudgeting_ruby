@@ -1,6 +1,6 @@
-# AspireBudgetWrapper
+# Aspire Budget - Ruby 
 
-This is an independent project implementing a Ruby Wrapper for Aspire Budgeting spreadsheets, leveraging from the use of another great gem: `google_drive`.  
+This is an independent project implementing a Ruby  for Aspire Budgeting spreadsheets, leveraging from the use of another great gem: `google_drive`.  
 The idea of this gem is to enable a good API to be easily implemented, allowing more powerful and complex tools to emerge.
 
 If you don't know Aspire Budgeting please refer to: https://aspirebudget.com/
@@ -13,7 +13,7 @@ todo
 
 ```ruby
 session = GoogleDrive::Session.from_config('path_to_your_credentials.json')
-client = AspireBudgetWrapper::Client.new(session: session, spreadsheet_key: 'YOUR_SPREADSHEET_KEY')
+client = AspireBudget::Client.new(session: session, spreadsheet_key: 'YOUR_SPREADSHEET_KEY')
 ```
 
 ## Development

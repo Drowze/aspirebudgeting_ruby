@@ -2,7 +2,7 @@
 
 require 'utils'
 
-module AspireBudgetWrapper
+module AspireBudget
   module Worksheets
     class WorksheetBase
       include Utils

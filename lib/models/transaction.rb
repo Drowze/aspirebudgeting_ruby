@@ -2,7 +2,7 @@
 
 require 'utils'
 
-module AspireBudgetWrapper
+module AspireBudget
   module Models
     class Transaction
       attr_reader :date, :outflow, :inflow, :category, :account, :memo, :status

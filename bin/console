@@ -8,7 +8,7 @@ require 'bundler/setup'
 require 'client'
 
 session = GoogleDrive::Session.from_config(ENV['GOOGLE_CREDENTIALS_PATH'])
-client = AspireBudgetWrapper::Client.new(session: session, spreadsheet_key: ENV['SPREADSHEET_KEY'])
+client = AspireBudget::Client.new(session: session, spreadsheet_key: ENV['SPREADSHEET_KEY'])
 
 binding.pry
 

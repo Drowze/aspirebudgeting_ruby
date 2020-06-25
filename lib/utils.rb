@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module AspireBudgetWrapper
+module AspireBudget
   module Utils
     class << self
       DATE_FORMAT = '%d/%m/%y'

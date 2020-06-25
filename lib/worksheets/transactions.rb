@@ -3,7 +3,7 @@
 require 'worksheets/worksheet_base'
 require 'models/transaction'
 
-module AspireBudgetWrapper
+module AspireBudget
   module Worksheets
     class Transactions < WorksheetBase
       WS_TITLE = 'Transactions'

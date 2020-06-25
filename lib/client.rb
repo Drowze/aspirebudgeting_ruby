@@ -5,7 +5,7 @@ require 'worksheets/transactions'
 
 require 'models/transaction'
 
-module AspireBudgetWrapper
+module AspireBudget
   class Client
     def initialize(session:, spreadsheet_key:)
       @session = session

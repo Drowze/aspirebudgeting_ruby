@@ -2,7 +2,7 @@
 
 require_relative './worksheet_base'
 
-module AspireBudgetWrapper
+module AspireBudget
   module Worksheets
     class BackendData < WorksheetBase
       WS_TITLE = 'BackendData'
