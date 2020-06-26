@@ -32,11 +32,11 @@ module AspireBudget
       end
 
       def parse_status(value)
-        TRANSACTION_STATUS_MAPPING.fetch(value)
+        TRANSACTION_STATUS_MAPPING.fetch(value, nil)
       end
 
       def serialize_status(value)
-        TRANSACTION_STATUS_MAPPING.key(value)
+        TRANSACTION_STATUS_MAPPING.key(value) || ''
       end
     end
   end

@@ -2,6 +2,7 @@
 
 require 'worksheets/backend_data'
 require 'worksheets/transactions'
+require 'worksheets/category_transfers'
 
 require 'models/transaction'
 
@@ -25,7 +26,20 @@ module AspireBudget
       transactions.insert(transaction)
     end
 
+    def category_transfer_list
+      category_transfers.all
+    end
+
+    def insert_category_transfer
+      category_transfer = Models::CategoryTransfer.new(params)
+      category_transfers.insert(category_transfer)
+    end
+
     private
+
+    def category_transfers
+      @category_transfers ||= Worksheets::CategoryTransfers.new(agent: agent)
+    end
 
     def transactions
       @transactions ||= Worksheets::Transactions.new(agent: agent)
