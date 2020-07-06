@@ -24,11 +24,11 @@ module AspireBudget
       end
 
       def parse_currency(value)
-        value && value[/\d+\.\d+/].to_f || 0.0
+        value && value.sub(CURRENCY_SYMBOL, '').to_f
       end
 
       def serialize_currency(value)
-        "#{CURRENCY_SYMBOL}#{format('%.2f', value)}"
+        format('%.2f', value)
       end
 
       def parse_status(value)

@@ -13,15 +13,28 @@ $ gem install 'aspire_budget'
 
 ## Usage
 
-Initiate client connection:
+Either have an initializer with your config:
 ```ruby
-session = GoogleDrive::Session.from_config('path_to_your_credentials.json')
-client = AspireBudget::Client.new(session: session, spreadsheet_key: 'YOUR_SPREADSHEET_KEY')
+# Use this method if you plan to work on a single spreadsheet with your application
+AspireBudget.configure do |config|
+  config.session = GoogleDrive.from_config('path_to_your_credentials.json')
+  config.spreadsheet_key = 'YOUR_SPREADSHEET_KEY'
+end
+```
+
+Or specify the config when initializing a worksheet:
+```ruby
+# Use this method if you plan working with multiple spreadsheets with your application
+AspireBudget::Worksheets::Transactions.new(
+  session: GoogleDrive.from_config('path_to_your_credentials.json'),
+  spreadsheet_key: 'YOUR_SPREADSHEET_KEY'
+)
 ```
 
 List transactions:
 ```ruby
-client.list_transactions
+# or AspireBudget::Worksheets::Transactions.new(...).all
+AspireBudget::Worksheets::Transactions.all
 # <AspireBudget::Models::Transaction:0x0000564acc1ae088
 #  @account="Revolut",
 #  @category="Groceries",
@@ -42,7 +55,8 @@ client.list_transactions
 
 Insert transaction:
 ```ruby
-client.insert_transaction(date: '25/06/2020', outflow: 10.0, inflow: 12.0, category: 'test', account: 'AIB', memo: 'ruby', status: :pending)
+# TODO
+# client.insert_transaction(date: '25/06/2020', outflow: 10.0, inflow: 12.0, category: 'test', account: 'AIB', memo: 'ruby', status: :pending)
 => #<AspireBudget::Models::Transaction:0x0000564acc1522b0
 # @account="AIB",
 # @category="test",
