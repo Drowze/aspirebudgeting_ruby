@@ -30,7 +30,7 @@ module AspireBudget
       end
 
       def serialize_currency(value)
-        format('%.2f', value)
+        format('%<value>.2f', value: value)
       end
 
       def parse_status(value)
