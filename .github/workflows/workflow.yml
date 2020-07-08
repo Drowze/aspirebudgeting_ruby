@@ -30,4 +30,4 @@ jobs:
           gem install bundler
           bundler install
       - name: Run tests
-        run: bundler exec rake
+        run: bundler exec rspec
