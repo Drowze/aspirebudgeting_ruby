@@ -5,18 +5,11 @@ require 'bundler/setup'
 Bundler.require(:development)
 
 require 'google_drive'
-require 'client'
+require 'aspire_budget'
 
 AspireBudget.configure do |config|
   config.session = GoogleDrive::Session.from_config(ENV['GOOGLE_CREDENTIALS_PATH'])
   config.spreadsheet_key = ENV['SPREADSHEET_KEY']
 end
 
-# client = AspireBudget::Client.new
-
 binding.pry
-
-# params = { date: '25/06/2020', outflow: 10.0, inflow: 12.0, category: 'test', account: 'AIB', memo: 'ruby', status: :pending }
-# client.insert_transaction(params)
-
-# client.transactions_list

@@ -7,3 +7,4 @@ require 'worksheets/transactions'
 require 'worksheets/category_transfers'
 
 require 'models/transaction'
+require 'models/category_transfer'
