@@ -4,14 +4,14 @@ require 'date'
 require 'worksheets/transactions'
 
 RSpec.describe AspireBudget::Worksheets::Transactions do
-  describe '#all' do
-    before do
-      AspireBudget.configure do |config|
-        config.session = GoogleDrive.from_config('foo')
-        config.spreadsheet_key = 'abc123'
-      end
+  before do
+    AspireBudget.configure do |config|
+      config.session = GoogleDrive.from_config('foo')
+      config.spreadsheet_key = 'abc123'
     end
+  end
 
+  describe '#all' do
     it 'lists the transactions' do
       expect(described_class.all).to contain_exactly(
         an_object_having_attributes(
@@ -33,6 +33,64 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
           status: :approved
         )
       )
+    end
+  end
+
+  describe '#insert' do
+    let(:params) do
+      {
+        date: '03/06/2020',
+        outflow: 9,
+        inflow: 8,
+        category: 'Test',
+        account: 'Checking',
+        memo: 'ruby',
+        status: :approved
+      }
+    end
+    let(:new_record_attributes) do
+      {
+        date: Date.parse('2020-06-03'),
+        outflow: 9.to_f,
+        inflow: 8.to_f,
+        category: 'Test',
+        account: 'Checking',
+        memo: 'ruby',
+        status: :approved
+      }
+    end
+
+    context 'when trying to insert a hash' do
+      it 'inserts new data' do
+        new_record = nil
+        expect { new_record = described_class.insert(params) }
+          .to change { described_class.all.size }
+          .by(1)
+
+        expect(new_record).to have_attributes(new_record_attributes)
+      end
+    end
+
+    context 'when trying to insert a transaction object' do
+      let(:transaction) do
+        double(**new_record_attributes)
+      end
+
+      before do
+        allow(transaction)
+          .to receive(:to_row)
+          .with([:date, :outflow, :inflow, :category, :account, :memo, :status])
+          .and_return(["03/06/20", "9.00", "8.00", "Test", "Checking", "ruby", "✅"])
+      end
+
+      it 'inserts new data' do
+        new_record = nil
+        expect { new_record = described_class.insert(transaction) }
+          .to change { described_class.all.size }
+          .by(1)
+
+        expect(new_record).to have_attributes(new_record_attributes)
+      end
     end
   end
 end

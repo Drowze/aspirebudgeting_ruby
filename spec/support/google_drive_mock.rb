@@ -24,12 +24,29 @@ class GoogleDriveMock
   end
 
   class Worksheet
+    def synchronize; end
+
     def num_rows
       rows.size
     end
 
+    def num_cols
+      rows.first.size
+    end
+
     def [](row, col)
       rows[row - 1][col - 1]
+    end
+
+    def update_cells(starting_row, starting_col, arr)
+      if starting_row > num_rows
+        new_rows = Array.new(starting_row - num_rows, Array.new(num_cols, ''))
+        @rows.push(*new_rows)
+      end
+
+      arr.each do |row|
+        @rows[starting_row - 1][starting_col - 1, row.size] = row
+      end
     end
   end
 
@@ -39,7 +56,7 @@ class GoogleDriveMock
     end
 
     def rows(skip = 0) # rubocop:disable Metrics/MethodLength
-      [
+      @rows ||= [
         ['', 'Transactions', '', '', '', '', '', ''],
         ['', '', '', '', '', '', '', ''],
         ['', '', '', '', '', 'Select a Category to view activity data', 'Current Category balance', ''],
@@ -50,7 +67,8 @@ class GoogleDriveMock
         ['', 'DATE', 'OUTFLOW', 'INFLOW', 'CATEGORY', 'ACCOUNT', 'MEMO', 'STATUS'],
         ['', '3/6/20', '€3.72', '', 'Cosmetics', 'Checking', 'Boots', '✅'],
         ['', '3/6/20', '€10.00', '', 'Groceries', 'Checking', 'Tesco', '✅']
-      ].drop(skip)
+      ]
+      @rows.drop(skip)
     end
   end
 end

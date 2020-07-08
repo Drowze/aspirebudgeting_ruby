@@ -16,6 +16,7 @@ module AspireBudget
       end
 
       def insert(record, sync: true)
+        record = klass.new(**record) if record.is_a?(Hash)
         row = record.to_row(header)
         ws.update_cells(*next_row_col, [row])
         ws.synchronize if sync
