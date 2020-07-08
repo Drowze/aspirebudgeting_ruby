@@ -1,8 +1,9 @@
 env:
   RUBY_VERSION: 2.7.1
+  RAILS_ENABLE_CODE_COVERAGE: 1
 
 name: build-test
-on: [ push, pull_request ]
+on: push
 jobs:
   rubocop-test:
     name: Rubocop
@@ -31,3 +32,9 @@ jobs:
           bundler install
       - name: Run tests
         run: bundler exec rspec
+      - name: Upload coverage results    
+        uses: actions/upload-artifact@master
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage

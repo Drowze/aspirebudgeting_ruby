@@ -9,4 +9,5 @@ group :test, :development do
   gem 'pry'
   gem 'rspec', '~> 3.0'
   gem 'rubocop'
+  gem 'simplecov'
 end

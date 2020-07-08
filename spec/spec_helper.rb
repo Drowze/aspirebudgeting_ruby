@@ -3,6 +3,8 @@
 require 'bundler/setup'
 Bundler.require(:test)
 
+SimpleCov.start if ENV['RAILS_ENABLE_CODE_COVERAGE']
+
 require 'support/google_drive_mock'
 
 RSpec.configure do |config|
