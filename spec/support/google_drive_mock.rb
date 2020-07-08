@@ -18,13 +18,25 @@ class GoogleDriveMock
 
     def worksheets
       @worksheets ||= [
-        TransactionsWorksheet.new
+        TransactionsWorksheet.new,
+        CategoryTransfersWorksheet.new
       ]
     end
   end
 
   class Worksheet
-    def synchronize; end
+    def rows(skip = 0)
+      @rows ||= _starting_data
+      @rows.drop(skip)
+    end
+
+    def synchronize
+      @dirty = false
+    end
+
+    def dirty?
+      @dirty
+    end
 
     def num_rows
       rows.size
@@ -38,14 +50,29 @@ class GoogleDriveMock
       rows[row - 1][col - 1]
     end
 
-    def update_cells(starting_row, starting_col, arr)
-      if starting_row > num_rows
-        new_rows = Array.new(starting_row - num_rows, Array.new(num_cols, ''))
+    def []=(row, col, value) # rubocop:disable Metrics/MethodLength
+      @dirty = true
+
+      if row > num_rows
+        new_rows = Array.new(row - num_rows, Array.new([col, num_cols].max, ''))
         @rows.push(*new_rows)
       end
 
-      arr.each do |row|
-        @rows[starting_row - 1][starting_col - 1, row.size] = row
+      if col > num_cols
+        @rows.each do |existing_row|
+          new_cols = Array.new(col - num_rows, '')
+          existing_row.push(new_cols)
+        end
+      end
+
+      @rows[row - 1][col - 1] = value
+    end
+
+    def update_cells(starting_row, starting_col, matrix)
+      matrix.each_with_index do |row, i|
+        row.each_with_index do |cell, j|
+          self[i + starting_row, j + starting_col] = cell
+        end
       end
     end
   end
@@ -55,8 +82,10 @@ class GoogleDriveMock
       'Transactions'
     end
 
-    def rows(skip = 0) # rubocop:disable Metrics/MethodLength
-      @rows ||= [
+    private
+
+    def _starting_data # rubocop:disable Metrics/MethodLength
+      [
         ['', 'Transactions', '', '', '', '', '', ''],
         ['', '', '', '', '', '', '', ''],
         ['', '', '', '', '', 'Select a Category to view activity data', 'Current Category balance', ''],
@@ -68,7 +97,28 @@ class GoogleDriveMock
         ['', '3/6/20', '€3.72', '', 'Cosmetics', 'Checking', 'Boots', '✅'],
         ['', '3/6/20', '€10.00', '', 'Groceries', 'Checking', 'Tesco', '✅']
       ]
-      @rows.drop(skip)
+    end
+  end
+
+  class CategoryTransfersWorksheet < Worksheet
+    def title
+      'Category Transfers'
+    end
+
+    private
+
+    def _starting_data # rubocop:disable Metrics/MethodLength
+      [
+        ['', '', '', '', '', '', ''],
+        ['', 'Category Transfers', '', '', 'Select a Category to view funding details', 'Monthly Amount', ''],
+        ['', '', '', '', 'Other house expenses', '€60.00', ''],
+        ['', 'Available to budget', '', 'DOL', 'To meet your monthly target for this category, budget another', '', ''],
+        ['', '€100,000.00', '', 'DOL', '€60.00', '', ''],
+        ['', '', '', '', '', '', ''],
+        ['', 'DATE', 'AMOUNT', 'FROM CATEGORY', 'TO CATEGORY', 'MEMO', '✱'],
+        ['', '29/5/20', '€500.00', 'Available to budget', 'Groceries', 'Monthly target', ''],
+        ['', '29/5/20', '€100.00', 'Available to budget', 'Cosmetics', 'Monthly target', '']
+      ]
     end
   end
 end

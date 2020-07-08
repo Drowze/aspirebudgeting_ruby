@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require 'date'
-require 'worksheets/transactions'
+require 'worksheets/category_transfers'
 
-RSpec.describe AspireBudget::Worksheets::Transactions do
+RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
   before do
     AspireBudget.configure do |config|
       config.session = GoogleDrive.from_config('foo')
@@ -15,22 +15,18 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
     it 'lists the transactions' do
       expect(described_class.all).to contain_exactly(
         an_object_having_attributes(
-          account: 'Checking',
-          category: 'Cosmetics',
-          date: Date.parse('2020-06-03'),
-          inflow: 0.to_f,
-          outflow: 3.72,
-          memo: 'Boots',
-          status: :approved
+          date: Date.parse('2020-05-29'),
+          amount: 500.to_f,
+          from: 'Available to budget',
+          to: 'Groceries',
+          memo: 'Monthly target'
         ),
         an_object_having_attributes(
-          account: 'Checking',
-          category: 'Groceries',
-          date: Date.parse('2020-06-03'),
-          inflow: 0.to_f,
-          outflow: 10.to_f,
-          memo: 'Tesco',
-          status: :approved
+          date: Date.parse('2020-05-29'),
+          amount: 100.to_f,
+          from: 'Available to budget',
+          to: 'Cosmetics',
+          memo: 'Monthly target'
         )
       )
     end
@@ -38,25 +34,15 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
 
   describe '#insert' do
     let(:params) do
-      {
-        date: '03/06/2020',
-        outflow: 9,
-        inflow: 8,
-        category: 'Test',
-        account: 'Checking',
-        memo: 'ruby',
-        status: :approved
-      }
+      { date: '03/06/2020', amount: 120.43, from: 'Available to budget', to: 'Groceries', memo: 'ruby' }
     end
     let(:new_record_attributes) do
       {
         date: Date.parse('2020-06-03'),
-        outflow: 9.to_f,
-        inflow: 8.to_f,
-        category: 'Test',
-        account: 'Checking',
-        memo: 'ruby',
-        status: :approved
+        amount: 120.43,
+        from: 'Available to budget',
+        to: 'Groceries',
+        memo: 'ruby'
       }
     end
 
@@ -73,21 +59,21 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
       end
     end
 
-    context 'when trying to insert a transaction object' do
-      let(:transaction) do
+    context 'when trying to insert a category_transfer object' do
+      let(:category_transfer) do
         double(**new_record_attributes)
       end
 
       before do
-        allow(transaction)
+        allow(category_transfer)
           .to receive(:to_row)
-          .with(%i[date outflow inflow category account memo status])
-          .and_return(['03/06/20', '9.00', '8.00', 'Test', 'Checking', 'ruby', '✅'])
+          .with(%i[date amount from to memo])
+          .and_return(['03/06/20', '120.43', 'Available to budget', 'Groceries', 'ruby'])
       end
 
       it 'inserts new data' do
         new_record = nil
-        expect { new_record = described_class.insert(transaction) }
+        expect { new_record = described_class.insert(category_transfer) }
           .to change { described_class.all.size }
           .by(1)
 

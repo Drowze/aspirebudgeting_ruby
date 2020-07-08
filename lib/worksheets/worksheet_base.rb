@@ -30,6 +30,10 @@ module AspireBudget
         @agent = AspireBudget.configuration.agent(session: session, spreadsheet_key: spreadsheet_key)
       end
 
+      def dirty?
+        ws.dirty?
+      end
+
       private
 
       def ws

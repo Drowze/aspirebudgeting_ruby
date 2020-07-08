@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'worksheets/worksheet_base'
+require 'worksheets/transactions'
 require 'models/category_transfer'
 
 module AspireBudget
