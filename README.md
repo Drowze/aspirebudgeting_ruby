@@ -1,4 +1,4 @@
-2# Aspire Budget - Ruby 
+# Aspire Budget - Ruby
 
 This is an independent project implementing a Ruby  for Aspire Budgeting spreadsheets, leveraging from the use of another great gem: `google_drive`.  
 The idea of this gem is to enable a good API to be easily implemented, allowing more powerful and complex tools to emerge.

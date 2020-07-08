@@ -3,6 +3,13 @@
 require 'bundler/setup'
 Bundler.require(:test)
 
+if ENV['CI']
+  require 'simplecov'
+  SimpleCov.start do
+    add_filter %r{^/spec/}
+  end
+end
+
 require 'support/google_drive_mock'
 
 RSpec.configure do |config|
