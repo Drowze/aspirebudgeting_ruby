@@ -1,6 +1,6 @@
 env:
   RUBY_VERSION: 2.7.1
-  RAILS_ENABLE_CODE_COVERAGE: 1
+  ENABLE_CODE_COVERAGE: 1
 
 name: build-test
 on: push
@@ -32,9 +32,23 @@ jobs:
           bundler install
       - name: Run tests
         run: bundler exec rspec
-      - name: Upload coverage results    
+      - name: Upload resultset artifact
         uses: actions/upload-artifact@master
         if: always()
         with:
           name: coverage-report
           path: coverage
+  upload-codecov:
+    name: Codecov
+    needs: rspec-test
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Download resultset artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: coverage-report
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage-report/.resultset.json
