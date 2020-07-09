@@ -20,6 +20,7 @@ module AspireBudget
         new(**params)
       end
 
+      # rubocop:disable Metrics/ParameterLists
       def initialize(date:, outflow:, inflow:, category:, account:, memo:, status:)
         @date = Utils.parse_date(date) || Date.today
         @outflow = outflow || 0.0
@@ -29,6 +30,7 @@ module AspireBudget
         @memo = memo
         @status = status
       end
+      # rubocop:enable Metrics/ParameterLists
 
       def to_row(header)
         header.map do |h|

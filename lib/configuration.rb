@@ -10,8 +10,7 @@ module AspireBudget
   end
 
   class Configuration
-    attr_writer :session
-    attr_writer :spreadsheet_key
+    attr_writer :session, :spreadsheet_key
 
     def session
       @session || raise('Please set session')

@@ -1,0 +1,42 @@
+name: CI
+
+on: push
+
+jobs:
+  main:
+    name: >-
+      ${{ matrix.os }} ${{ matrix.ruby }}
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      matrix:
+        os: [ubuntu, macos]
+        ruby: [2.6, 2.7]
+    steps:
+      - uses: actions/checkout@v2.3.1
+      - uses: ruby/setup-ruby@v1.39.0
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundler install
+      - name: Rubocop
+        run: bundle exec rubocop
+      - name: Run RSpec without Code Climate
+        if: matrix.os != 'ubuntu' || matrix.ruby != '2.7'
+        run: bundle exec rspec
+
+      - name: Run RSpec and publish coverage on Code Climate
+        if: matrix.os == 'ubuntu' && matrix.ruby == '2.7'
+        uses: paambaati/codeclimate-action@v2.6.0
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+        with:
+          coverageCommand: bundle exec rspec
+          debug: true
+          coverageLocations: coverage/.resultset.json:simplecov
+      - name: Publish coverage on Codecov
+        if: matrix.os == 'ubuntu' && matrix.ruby == '2.7'
+        uses: codecov/codecov-action@v1.0.10
+        with:
+          file: coverage/.resultset.json
