@@ -1,6 +1,12 @@
 # Aspire Budget - Ruby
 
-This is an independent project implementing a Ruby  for Aspire Budgeting spreadsheets, leveraging from the use of another great gem: `google_drive`.  
+[![CI Status](https://github.com/drowze/aspirebudgeting_ruby/workflows/CI/badge.svg)](https://github.com/drowze/aspirebudgeting_ruby)
+[![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop-hq/rubocop)
+[![codecov](https://codecov.io/gh/Drowze/aspirebudgeting_ruby/branch/master/graph/badge.svg)](https://codecov.io/gh/Drowze/aspirebudgeting_ruby)
+[![Maintainability](https://api.codeclimate.com/v1/badges/03531044f88452981597/maintainability)](https://codeclimate.com/github/Drowze/aspirebudgeting_ruby/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/03531044f88452981597/test_coverage)](https://codeclimate.com/github/Drowze/aspirebudgeting_ruby/test_coverage)
+
+This is an independent project implementing a Ruby  for Aspire Budgeting spreadsheets, leveraging from the use of another great gem: `google_drive`.
 The idea of this gem is to enable a good API to be easily implemented, allowing more powerful and complex tools to emerge.
 
 If you don't know Aspire Budgeting please refer to: https://aspirebudget.com/
