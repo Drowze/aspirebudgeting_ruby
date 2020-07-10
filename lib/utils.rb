@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 require 'date'
+require 'configuration'
+require 'monetize'
 
 module AspireBudget
   module Utils
     class << self
       DATE_FORMAT = '%d/%m/%y'
-      CURRENCY_SYMBOL = '€'
       TRANSACTION_STATUS_MAPPING = {
         '✅' => :approved,
         '🅿️' => :pending,
@@ -26,7 +27,7 @@ module AspireBudget
       end
 
       def parse_currency(value)
-        value && value.sub(CURRENCY_SYMBOL, '').to_f
+        value && Monetize.parse(value, AspireBudget.configuration.currency).to_f
       end
 
       def serialize_currency(value)

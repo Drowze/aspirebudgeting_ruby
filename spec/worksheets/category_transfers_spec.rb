@@ -23,7 +23,7 @@ RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
         ),
         an_object_having_attributes(
           date: Date.parse('2020-05-29'),
-          amount: 100.to_f,
+          amount: 1200.to_f,
           from: 'Available to budget',
           to: 'Cosmetics',
           memo: 'Monthly target'

@@ -40,8 +40,8 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
     let(:params) do
       {
         date: '03/06/2020',
-        outflow: 9,
-        inflow: 8,
+        outflow: 900,
+        inflow: 800,
         category: 'Test',
         account: 'Checking',
         memo: 'ruby',
@@ -51,8 +51,8 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
     let(:new_record_attributes) do
       {
         date: Date.parse('2020-06-03'),
-        outflow: 9.to_f,
-        inflow: 8.to_f,
+        outflow: 900.to_f,
+        inflow: 800.to_f,
         category: 'Test',
         account: 'Checking',
         memo: 'ruby',
@@ -82,7 +82,7 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
         allow(transaction)
           .to receive(:to_row)
           .with(%i[date outflow inflow category account memo status])
-          .and_return(['03/06/20', '9.00', '8.00', 'Test', 'Checking', 'ruby', '✅'])
+          .and_return(['03/06/20', '900.00', '800.00', 'Test', 'Checking', 'ruby', '✅'])
       end
 
       it 'inserts new data' do
