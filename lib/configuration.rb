@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'money'
+
 module AspireBudget
   def self.configure
     yield(configuration)
@@ -7,6 +9,10 @@ module AspireBudget
 
   def self.configuration
     @configuration ||= Configuration.new
+  end
+
+  def self.reset!
+    @configuration = Configuration.new
   end
 
   class Configuration

@@ -13,7 +13,7 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
 
   describe '#all' do
     it 'lists the transactions' do
-      expect(described_class.all).to contain_exactly(
+      expect(subject.all).to contain_exactly(
         an_object_having_attributes(
           account: 'Checking',
           category: 'Cosmetics',
@@ -63,13 +63,13 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
     context 'when trying to insert a hash' do
       it 'inserts new data' do
         new_record = nil
-        expect { new_record = described_class.insert(params) }
-          .to change { described_class.all.size }
+        expect { new_record = subject.insert(params) }
+          .to change { subject.all.size }
           .by(1)
 
         expect(new_record).to have_attributes(new_record_attributes)
 
-        expect(described_class).not_to be_dirty
+        expect(subject).not_to be_dirty
       end
     end
 
@@ -87,13 +87,13 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
 
       it 'inserts new data' do
         new_record = nil
-        expect { new_record = described_class.insert(transaction) }
-          .to change { described_class.all.size }
+        expect { new_record = subject.insert(transaction) }
+          .to change { subject.all.size }
           .by(1)
 
         expect(new_record).to have_attributes(new_record_attributes)
 
-        expect(described_class).not_to be_dirty
+        expect(subject).not_to be_dirty
       end
     end
   end
