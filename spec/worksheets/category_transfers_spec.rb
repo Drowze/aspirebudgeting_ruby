@@ -13,7 +13,7 @@ RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
 
   describe '#all' do
     it 'lists the transactions' do
-      expect(described_class.all).to contain_exactly(
+      expect(subject.all).to contain_exactly(
         an_object_having_attributes(
           date: Date.parse('2020-05-29'),
           amount: 500.to_f,
@@ -23,7 +23,7 @@ RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
         ),
         an_object_having_attributes(
           date: Date.parse('2020-05-29'),
-          amount: 100.to_f,
+          amount: 1200.to_f,
           from: 'Available to budget',
           to: 'Cosmetics',
           memo: 'Monthly target'
@@ -49,13 +49,13 @@ RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
     context 'when trying to insert a hash' do
       it 'inserts new data' do
         new_record = nil
-        expect { new_record = described_class.insert(params) }
-          .to change { described_class.all.size }
+        expect { new_record = subject.insert(params) }
+          .to change { subject.all.size }
           .by(1)
 
         expect(new_record).to have_attributes(new_record_attributes)
 
-        expect(described_class).not_to be_dirty
+        expect(subject).not_to be_dirty
       end
     end
 
@@ -73,13 +73,13 @@ RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
 
       it 'inserts new data' do
         new_record = nil
-        expect { new_record = described_class.insert(category_transfer) }
-          .to change { described_class.all.size }
+        expect { new_record = subject.insert(category_transfer) }
+          .to change { subject.all.size }
           .by(1)
 
         expect(new_record).to have_attributes(new_record_attributes)
 
-        expect(described_class).not_to be_dirty
+        expect(subject).not_to be_dirty
       end
     end
   end

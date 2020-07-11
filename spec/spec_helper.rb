@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
-Bundler.require(:test)
 
 if ENV['CI']
   require 'simplecov'
@@ -10,12 +9,17 @@ if ENV['CI']
   end
 end
 
+require 'money'
 require 'support/google_drive_mock'
+require 'configuration'
+
+Money.rounding_mode = BigDecimal::ROUND_HALF_EVEN
 
 RSpec.configure do |config|
   config.disable_monkey_patching!
 
   config.before do
+    AspireBudget.reset!
     stub_const('GoogleDrive', GoogleDriveMock)
   end
 end

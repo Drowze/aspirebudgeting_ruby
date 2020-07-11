@@ -13,7 +13,7 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
 
   describe '#all' do
     it 'lists the transactions' do
-      expect(described_class.all).to contain_exactly(
+      expect(subject.all).to contain_exactly(
         an_object_having_attributes(
           account: 'Checking',
           category: 'Cosmetics',
@@ -40,8 +40,8 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
     let(:params) do
       {
         date: '03/06/2020',
-        outflow: 9,
-        inflow: 8,
+        outflow: 900,
+        inflow: 800,
         category: 'Test',
         account: 'Checking',
         memo: 'ruby',
@@ -51,8 +51,8 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
     let(:new_record_attributes) do
       {
         date: Date.parse('2020-06-03'),
-        outflow: 9.to_f,
-        inflow: 8.to_f,
+        outflow: 900.to_f,
+        inflow: 800.to_f,
         category: 'Test',
         account: 'Checking',
         memo: 'ruby',
@@ -63,13 +63,13 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
     context 'when trying to insert a hash' do
       it 'inserts new data' do
         new_record = nil
-        expect { new_record = described_class.insert(params) }
-          .to change { described_class.all.size }
+        expect { new_record = subject.insert(params) }
+          .to change { subject.all.size }
           .by(1)
 
         expect(new_record).to have_attributes(new_record_attributes)
 
-        expect(described_class).not_to be_dirty
+        expect(subject).not_to be_dirty
       end
     end
 
@@ -82,18 +82,18 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
         allow(transaction)
           .to receive(:to_row)
           .with(%i[date outflow inflow category account memo status])
-          .and_return(['03/06/20', '9.00', '8.00', 'Test', 'Checking', 'ruby', '✅'])
+          .and_return(['03/06/20', '900.00', '800.00', 'Test', 'Checking', 'ruby', '✅'])
       end
 
       it 'inserts new data' do
         new_record = nil
-        expect { new_record = described_class.insert(transaction) }
-          .to change { described_class.all.size }
+        expect { new_record = subject.insert(transaction) }
+          .to change { subject.all.size }
           .by(1)
 
         expect(new_record).to have_attributes(new_record_attributes)
 
-        expect(described_class).not_to be_dirty
+        expect(subject).not_to be_dirty
       end
     end
   end

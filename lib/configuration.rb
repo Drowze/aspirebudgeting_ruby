@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'money'
+
 module AspireBudget
   def self.configure
     yield(configuration)
@@ -7,6 +9,10 @@ module AspireBudget
 
   def self.configuration
     @configuration ||= Configuration.new
+  end
+
+  def self.reset!
+    @configuration = Configuration.new
   end
 
   class Configuration
@@ -18,6 +24,14 @@ module AspireBudget
 
     def spreadsheet_key
       @spreadsheet_key || raise('Please set spreadsheet key')
+    end
+
+    def currency=(value)
+      @currency = Money::Currency.new(value)
+    end
+
+    def currency
+      @currency ||= Money::Currency.new('EUR')
     end
 
     def agent(session: nil, spreadsheet_key: nil)

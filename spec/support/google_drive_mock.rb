@@ -117,7 +117,7 @@ class GoogleDriveMock
         ['', '', '', '', '', '', ''],
         ['', 'DATE', 'AMOUNT', 'FROM CATEGORY', 'TO CATEGORY', 'MEMO', '✱'],
         ['', '29/5/20', '€500.00', 'Available to budget', 'Groceries', 'Monthly target', ''],
-        ['', '29/5/20', '€100.00', 'Available to budget', 'Cosmetics', 'Monthly target', '']
+        ['', '29/5/20', '€1,200.00', 'Available to budget', 'Cosmetics', 'Monthly target', '']
       ]
     end
   end
