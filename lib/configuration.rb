@@ -39,8 +39,9 @@ module AspireBudget
         @agent ||= self.session.spreadsheet_by_key(self.spreadsheet_key)
       else
         @agents ||= Hash.new do |h, k|
-          h[k] = session.spreadsheet_by_key(spreadsheet_key)
+          h[k] = session.spreadsheet_by_key(k.last)
         end
+
 
         @agents[[session, spreadsheet_key]]
       end

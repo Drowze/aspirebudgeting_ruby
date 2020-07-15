@@ -6,14 +6,22 @@ class GoogleDriveMock
   end
 
   class Session
-    def spreadsheet_by_key(_)
-      Spreadsheet.new
+    def spreadsheet_by_key(version = 'v3-2-0')
+      Spreadsheet.new(version)
     end
   end
 
   class Spreadsheet
+    def initialize(version)
+      @version = version
+    end
+
     def title
-      'Finances'
+      "aspire budget #{@version}"
+    end
+
+    def id
+      @version
     end
 
     def worksheets
