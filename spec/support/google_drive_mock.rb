@@ -6,27 +6,47 @@ class GoogleDriveMock
   end
 
   class Session
-    def spreadsheet_by_key(_)
-      Spreadsheet.new
+    def spreadsheet_by_key(version = 'v3-2-0')
+      Spreadsheet.new(version)
     end
   end
 
   class Spreadsheet
+    def initialize(version)
+      @version = version
+    end
+
     def title
-      'Finances'
+      "aspire budget #{@version}"
+    end
+
+    def id
+      @version
     end
 
     def worksheets
-      @worksheets ||= [
-        TransactionsWorksheet.new,
-        CategoryTransfersWorksheet.new
-      ]
+      @worksheets ||=
+        begin
+          ['Transactions', 'Category Transfers', 'BackendData'].map do |title|
+            filename = title.downcase.gsub(' ', '_') + '.json'
+            Worksheet.new(
+              title,
+              JSON.parse(File.read(__dir__ + "/../fixtures/#{@version}/#{filename}"))
+            )
+          end
+        end
     end
   end
 
   class Worksheet
+    attr_reader :title
+
+    def initialize(title, rows)
+      @title = title
+      @rows = rows
+    end
+
     def rows(skip = 0)
-      @rows ||= _starting_data
       @rows.drop(skip)
     end
 
@@ -46,7 +66,16 @@ class GoogleDriveMock
       rows.first.size
     end
 
-    def [](row, col)
+    def [](*args)
+      row, col =
+        if args.size == 1
+          raise 'Invalid cell' unless args.first.match?(/^[A-Z]\d+$/)
+
+          # convert 'A1' to [1, 1]
+          [args.first[0].ord - 64, args.first[1..-1].to_i]
+        else
+          args
+        end
       rows[row - 1][col - 1]
     end
 
@@ -74,51 +103,6 @@ class GoogleDriveMock
           self[i + starting_row, j + starting_col] = cell
         end
       end
-    end
-  end
-
-  class TransactionsWorksheet < Worksheet
-    def title
-      'Transactions'
-    end
-
-    private
-
-    def _starting_data # rubocop:disable Metrics/MethodLength
-      [
-        ['', 'Transactions', '', '', '', '', '', ''],
-        ['', '', '', '', '', '', '', ''],
-        ['', '', '', '', '', 'Select a Category to view activity data', 'Current Category balance', ''],
-        ['', 'Accounts last reconciled on', '', '', '', 'Available to budget', '€0.00', ''],
-        ['', '6/7/20', '', '', '', '', '', '2'],
-        ['', '', '', '', '', '', '', ''],
-        ['', '', '', '', '', '', '', ''],
-        ['', 'DATE', 'OUTFLOW', 'INFLOW', 'CATEGORY', 'ACCOUNT', 'MEMO', 'STATUS'],
-        ['', '3/6/20', '€3.72', '', 'Cosmetics', 'Checking', 'Boots', '✅'],
-        ['', '3/6/20', '€10.00', '', 'Groceries', 'Checking', 'Tesco', '✅']
-      ]
-    end
-  end
-
-  class CategoryTransfersWorksheet < Worksheet
-    def title
-      'Category Transfers'
-    end
-
-    private
-
-    def _starting_data # rubocop:disable Metrics/MethodLength
-      [
-        ['', '', '', '', '', '', ''],
-        ['', 'Category Transfers', '', '', 'Select a Category to view funding details', 'Monthly Amount', ''],
-        ['', '', '', '', 'Other house expenses', '€60.00', ''],
-        ['', 'Available to budget', '', 'DOL', 'To meet your monthly target for this category, budget another', '', ''],
-        ['', '€100,000.00', '', 'DOL', '€60.00', '', ''],
-        ['', '', '', '', '', '', ''],
-        ['', 'DATE', 'AMOUNT', 'FROM CATEGORY', 'TO CATEGORY', 'MEMO', '✱'],
-        ['', '29/5/20', '€500.00', 'Available to budget', 'Groceries', 'Monthly target', ''],
-        ['', '29/5/20', '€1,200.00', 'Available to budget', 'Cosmetics', 'Monthly target', '']
-      ]
     end
   end
 end

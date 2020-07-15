@@ -3,14 +3,51 @@ name: CI
 on: push
 
 jobs:
-  main:
+  build_and_test:
+    name: Build, test and coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+      - uses: ruby/setup-ruby@v1.39.0
+        with:
+          ruby-version: 2.7
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundler install
+      - name: Rubocop
+        run: bundle exec rubocop
+      - name: Ensure latest fixtures
+        env:
+          GOOGLE_ACCOUNT_TYPE: service_account
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_EMAIL: ${{ secrets.GOOGLE_CLIENT_EMAIL }}
+          GOOGLE_PRIVATE_KEY: ${{ secrets.GOOGLE_PRIVATE_KEY }}
+        run: bundle exec rake fixtures:validate
+      - name: Run RSpec and publish coverage on Code Climate
+        uses: paambaati/codeclimate-action@v2.6.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: bundle exec rspec
+          debug: true
+          coverageLocations: coverage/.resultset.json:simplecov
+      - name: Publish coverage on Codecov
+        uses: codecov/codecov-action@v1.0.10
+        with:
+          file: coverage/.resultset.json
+
+  test_multipe_versions:
     name: >-
-      ${{ matrix.os }} ${{ matrix.ruby }}
+      Test on ${{ matrix.os }} ${{ matrix.ruby }}
     runs-on: ${{ matrix.os }}-latest
     strategy:
       matrix:
         os: [ubuntu, macos]
-        ruby: [2.6, 2.7]
+        ruby: [2.4, 2.5, 2.6, 2.7]
+        exclude:
+          - os: ubuntu
+            ruby: 2.7
     steps:
       - uses: actions/checkout@v2.3.1
       - uses: ruby/setup-ruby@v1.39.0
@@ -20,23 +57,5 @@ jobs:
         run: |
           gem install bundler
           bundler install
-      - name: Rubocop
-        run: bundle exec rubocop
-      - name: Run RSpec without Code Climate
-        if: matrix.os != 'ubuntu' || matrix.ruby != '2.7'
+      - name: Run RSpec
         run: bundle exec rspec
-
-      - name: Run RSpec and publish coverage on Code Climate
-        if: matrix.os == 'ubuntu' && matrix.ruby == '2.7'
-        uses: paambaati/codeclimate-action@v2.6.0
-        env:
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-        with:
-          coverageCommand: bundle exec rspec
-          debug: true
-          coverageLocations: coverage/.resultset.json:simplecov
-      - name: Publish coverage on Codecov
-        if: matrix.os == 'ubuntu' && matrix.ruby == '2.7'
-        uses: codecov/codecov-action@v1.0.10
-        with:
-          file: coverage/.resultset.json

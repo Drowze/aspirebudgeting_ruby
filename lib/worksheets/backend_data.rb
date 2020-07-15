@@ -7,20 +7,9 @@ module AspireBudget
     class BackendData < WorksheetBase
       WS_TITLE = 'BackendData'
 
-      def categories
-        fetch_data(data_title: 'Categories')
-      end
-
-      def category_exists?(category)
-        categories.include?(category)
-      end
-
-      def fetch_data(data_title: 'Categories')
-        col = (1..ws.num_cols).find_index do |i|
-          ws[1, i] == data_title
-        end
-
-        ws.rows.transpose[col].reject(&:empty?) - [data_title]
+      def version
+        version_column = ws.rows[0].index { |header| header.match?(/Update/) }
+        ws.rows[1][version_column]
       end
     end
   end

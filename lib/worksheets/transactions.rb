@@ -55,7 +55,7 @@ module AspireBudget
 
       def header_location
         @header_location ||=
-          ((MARGIN_LEFT + 1)..ws.num_rows).find { |i| ws[i, MARGIN_LEFT + 1] == 'DATE' }
+          ((MARGIN_LEFT + 1)..ws.num_rows).find { |i| ws[i, MARGIN_LEFT + 1].casecmp?('date') }
       end
     end
   end
