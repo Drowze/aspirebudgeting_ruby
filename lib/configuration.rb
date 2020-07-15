@@ -42,7 +42,6 @@ module AspireBudget
           h[k] = session.spreadsheet_by_key(k.last)
         end
 
-
         @agents[[session, spreadsheet_key]]
       end
     end

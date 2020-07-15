@@ -19,7 +19,7 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
               # Aspire added the category 'starting on balance' on v3-2-0
               category: aspire_version == 'v3-2-0' ? '➡️ Starting Balance' : '🔢 Balance Adjustment',
               date: Date.parse('2020-06-03'),
-              inflow: 12000.to_f,
+              inflow: 12_000.to_f,
               outflow: 0.to_f,
               memo: '',
               status: :approved

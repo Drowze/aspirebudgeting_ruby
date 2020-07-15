@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'pry'
 require 'bundler/setup'
 require 'google_drive'
@@ -12,38 +13,35 @@ class ManageFixtures
   SPREADSHEET_KEYS = {
     'v3-1-0' => '1RHgsiisoZRsMVUp286UV9SipGIDYKxgAuzkkGzWeV2A',
     'v3-2-0' => '1qcTJ885txKWr4gc1pIR0iWAc1nHzYMzpDIxsQvA4Go0'
-  }
+  }.freeze
+
+  ACTIVE_WORKSHEET_KLASSES = [
+    AspireBudget::Worksheets::Transactions,
+    AspireBudget::Worksheets::CategoryTransfers,
+    AspireBudget::Worksheets::BackendData
+  ].freeze
 
   def initialize
-    active_worksheet_klasses = [
-      AspireBudget::Worksheets::Transactions,
-      AspireBudget::Worksheets::CategoryTransfers,
-      AspireBudget::Worksheets::BackendData
-    ]
-
     namespace :fixtures do
       task :update do
-        SPREADSHEET_KEYS.each do |key|
-          build_worksheets!(version, key, *active_worksheet_klasses)
-          update_fixtures(version)
-        end
+        SPREADSHEET_KEYS.each_key(&method(:update_fixtures))
       end
 
       task :validate do
-        SPREADSHEET_KEYS.each_pair do |version, spreadsheet_key|
-          build_worksheets!(version, spreadsheet_key, *active_worksheet_klasses)
-          validate_fixtures(version)
-        end
+        SPREADSHEET_KEYS.each_key(&method(:validate_fixtures))
       end
     end
   end
 
   private
 
-  def build_worksheets!(version, key, *klasses)
-    @worksheets ||= {}
-    @worksheets[version] ||= klasses.reduce({}) do |h, klass|
-      h.merge(klass::WS_TITLE => klass.new(session: session, spreadsheet_key: key))
+  def worksheets
+    @worksheets ||= SPREADSHEET_KEYS.reduce({}) do |h, (version, key)|
+      worksheets = ACTIVE_WORKSHEET_KLASSES.reduce({}) do |h2, klass|
+        h2.merge(klass::WS_TITLE => klass.new(session: session, spreadsheet_key: key))
+      end
+
+      h.merge(version => worksheets)
     end
   end
 
@@ -61,13 +59,13 @@ class ManageFixtures
   end
 
   def update_fixtures(version)
-    @worksheets[version].each_pair do |title, worksheet|
+    worksheets[version].each_pair do |title, worksheet|
       File.write(file_path(version, title), fixture_for(worksheet))
     end
   end
 
   def validate_fixtures(version)
-    @worksheets[version].each_pair do |title, worksheet|
+    worksheets[version].each_pair do |title, worksheet|
       existing_fixture = File.read(file_path(version, title))
       raise 'Fixture not up to date' if existing_fixture != fixture_for(worksheet)
     end
