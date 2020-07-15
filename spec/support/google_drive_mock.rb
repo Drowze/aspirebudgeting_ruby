@@ -25,16 +25,13 @@ class GoogleDriveMock
     end
 
     def worksheets
-      @worksheets ||=
-        begin
-          ['Transactions', 'Category Transfers', 'BackendData'].map do |title|
-            filename = title.downcase.gsub(' ', '_') + '.json'
-            Worksheet.new(
-              title,
-              JSON.parse(File.read(__dir__ + "/../fixtures/#{@version}/#{filename}"))
-            )
-          end
-        end
+      @worksheets ||= ['Transactions', 'Category Transfers', 'BackendData'].map do |title|
+        filename = title.downcase.gsub(' ', '_') + '.json'
+        Worksheet.new(
+          title,
+          JSON.parse(File.read(__dir__ + "/../fixtures/#{@version}/#{filename}"))
+        )
+      end
     end
   end
 
