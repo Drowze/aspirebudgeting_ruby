@@ -9,8 +9,10 @@ if ENV['CI']
   end
 end
 
+require 'pry'
 require 'money'
 require 'support/google_drive_mock'
+require 'support/spreadsheet_version_helper'
 require 'configuration'
 
 Money.rounding_mode = BigDecimal::ROUND_HALF_EVEN

@@ -23,10 +23,7 @@ RSpec.describe AspireBudget::Configuration do
   describe '.configuration.agent' do
     context 'when not passing the configuration variables' do
       it 'uses the ones globally configured' do
-        AspireBudget.configure do |config|
-          config.session = GoogleDrive.from_config('foo.json')
-          config.spreadsheet_key = 'v3-2-0'
-        end
+        use_spreadsheet_version 'v3-2-0'
 
         expect(AspireBudget.configuration.agent).to have_attributes(
           id: 'v3-2-0',

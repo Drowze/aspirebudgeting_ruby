@@ -51,7 +51,7 @@ AspireBudget::Worksheets::Transactions.all
 #    @status=:approved>,
 #   <AspireBudget::Models::Transaction:0x0000564acc1541a0
 #    @account="Revolut",
-#    @category="Cosmetics",
+#    @category="Electric Bill",
 #    @date=#<Date: 2020-06-22 ((2459023j,0s,0n),+0s,2299161j)>,
 #    @inflow=0.0,
 #    @memo="Amazon",
@@ -86,7 +86,7 @@ AspireBudget::Worksheets::CategoryTransfers.all
 
 Insert category transfer
 ```ruby
-AspireBudget::Worksheets::CategoryTransfers.insert(amount: 10, date: '25/06/2020', from: 'Available to budget', to: 'Cosmetics', memo: 'test')
+AspireBudget::Worksheets::CategoryTransfers.insert(amount: 10, date: '25/06/2020', from: 'Available to budget', to: 'Electric Bill', memo: 'test')
 => #<AspireBudget::Models::CategoryTransfer:0x0000264acc1529b0 ... >
 ```
 

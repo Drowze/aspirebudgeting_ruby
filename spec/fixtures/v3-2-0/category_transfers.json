@@ -1,0 +1,83 @@
+[
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  [
+    "",
+    "Category Transfers",
+    "",
+    "",
+    "Select a Category to view funding details",
+    "Monthly Amount",
+    ""
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "Dining Out",
+    "€200.00",
+    ""
+  ],
+  [
+    "",
+    "Available to budget",
+    "",
+    "DOL",
+    "To meet your monthly target for this category, budget another",
+    "",
+    ""
+  ],
+  [
+    "",
+    "€11,505.00",
+    "",
+    "DOL",
+    "€200.00",
+    "",
+    ""
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  [
+    "",
+    "DATE",
+    "AMOUNT",
+    "FROM CATEGORY",
+    "TO CATEGORY",
+    "MEMO",
+    "✱"
+  ],
+  [
+    "",
+    "29/5/20",
+    "€375.00",
+    "Available to budget",
+    "Groceries",
+    "Monthly target",
+    ""
+  ],
+  [
+    "",
+    "29/5/20",
+    "€120.00",
+    "Available to budget",
+    "Electric Bill",
+    "Monthly target",
+    ""
+  ]
+]

@@ -1,0 +1,122 @@
+[
+  [
+    "",
+    "Transactions",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Select a Category to view activity data",
+    "Current Category balance",
+    ""
+  ],
+  [
+    "",
+    "Accounts last reconciled on",
+    "",
+    "",
+    "",
+    "Available to budget",
+    "€11,505.00",
+    ""
+  ],
+  [
+    "",
+    "7/6/20",
+    "",
+    "",
+    "",
+    "No activity over the past 30 days",
+    "",
+    "0"
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  [
+    "",
+    "You last reconciled your accounts over a month ago",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  [
+    "",
+    "DATE",
+    "OUTFLOW",
+    "INFLOW",
+    "CATEGORY",
+    "ACCOUNT",
+    "MEMO",
+    "STATUS"
+  ],
+  [
+    "",
+    "3/6/20",
+    "",
+    "€12,000.00",
+    "➡️ Starting Balance",
+    "💰 Checking",
+    "",
+    "✅"
+  ],
+  [
+    "",
+    "3/6/20",
+    "€100.00",
+    "",
+    "Electric Bill",
+    "💰 Checking",
+    "",
+    "✅"
+  ],
+  [
+    "",
+    "3/6/20",
+    "€10.00",
+    "",
+    "Groceries",
+    "💰 Checking",
+    "Tesco",
+    "✅"
+  ],
+  [
+    "",
+    "7/6/20",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "*️⃣"
+  ]
+]
