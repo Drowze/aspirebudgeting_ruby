@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
-Bundler.require(:development)
+require 'pry'
 
 require 'google_drive'
 require 'aspire_budget'
