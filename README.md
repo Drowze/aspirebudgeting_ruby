@@ -13,13 +13,14 @@ If you don't know Aspire Budgeting please refer to: https://aspirebudget.com/
 
 ## Installation
 
-```
-$ gem install 'aspire_budget'
+```bash
+$ gem install aspire_budget
 ```
 
 ## Usage
 
 Either have an initializer with your config:
+
 ```ruby
 # Use this method if you plan to work on a single spreadsheet with your application
 AspireBudget.configure do |config|
@@ -29,6 +30,7 @@ end
 ```
 
 Or specify the config when initializing a worksheet like below.
+
 ```ruby
 # Use this method if you plan working with multiple spreadsheets with your application
 AspireBudget::Worksheets::Transactions.new(
@@ -38,6 +40,7 @@ AspireBudget::Worksheets::Transactions.new(
 ```
 
 List transactions:
+
 ```ruby
 # or AspireBudget::Worksheets::Transactions.new(...).all
 AspireBudget::Worksheets::Transactions.all
@@ -60,6 +63,7 @@ AspireBudget::Worksheets::Transactions.all
 ```
 
 Insert transaction:
+
 ```ruby
 # or AspireBudget::Worksheets::Transactions.new(...).all
 # you can also pass a Transaction record instead of a hash
@@ -68,6 +72,7 @@ AspireBudget::Worksheets::Transactions.insert(date: '25/06/2020', outflow: 10.0,
 ```
 
 List category transfers
+
 ```ruby
 AspireBudget::Worksheets::CategoryTransfers.all
 => [#<AspireBudget::Models::CategoryTransfer:0x0000559501fddab8
@@ -85,6 +90,7 @@ AspireBudget::Worksheets::CategoryTransfers.all
 ```
 
 Insert category transfer
+
 ```ruby
 AspireBudget::Worksheets::CategoryTransfers.insert(amount: 10, date: '25/06/2020', from: 'Available to budget', to: 'Electric Bill', memo: 'test')
 => #<AspireBudget::Models::CategoryTransfer:0x0000264acc1529b0 ... >
