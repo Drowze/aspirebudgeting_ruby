@@ -7,14 +7,19 @@ module AspireBudget
   module Worksheets
     class Transactions < WorksheetBase
       WS_TITLE = 'Transactions'
-      MARGIN_LEFT = 1
 
+      # @return [Array<AspireBudget::Transaction>] all transactions
       def all
         rows.map do |row|
           klass.from_row(header, row)
         end
       end
 
+      # Inserts a transaction to the spreadsheet. Accepts either a transaction
+      # record or a hash (that is passed to the transaction initializer)
+      # @see AspireBudget::Models::Transaction#initialize
+      # @param record [AspireBudget::Transaction, Hash]
+      # @return [AspireBudget::Transaction] a transaction
       def insert(record, sync: true)
         record = klass.new(**record) if record.is_a?(Hash)
         row = record.to_row(header)
@@ -29,14 +34,19 @@ module AspireBudget
         Models::Transaction
       end
 
+      # There is a 1 cell margin before the spreadsheet content
+      def margin_left
+        1
+      end
+
       def next_row_col
-        [ws.rows.size + 1, MARGIN_LEFT + 1]
+        [ws.rows.size + 1, margin_left + 1]
       end
 
       def sanitize(row)
         return if row.all?(&:empty?)
 
-        row.drop(MARGIN_LEFT)
+        row.drop(margin_left)
       end
 
       def rows
@@ -48,14 +58,14 @@ module AspireBudget
         @header ||=
           ws.rows(header_location - 1)
             .first
-            .drop(MARGIN_LEFT)
+            .drop(margin_left)
             .map(&:downcase)
             .map(&:to_sym)
       end
 
       def header_location
         @header_location ||=
-          ((MARGIN_LEFT + 1)..ws.num_rows).find { |i| ws[i, MARGIN_LEFT + 1].casecmp?('date') }
+          (1..ws.num_rows).find { |i| ws[i, margin_left + 1].casecmp?('date') }
       end
     end
   end

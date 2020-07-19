@@ -31,18 +31,12 @@ RSpec.describe AspireBudget::Worksheets::WorksheetBase do
       expect(subject.instance).to be(subject.instance)
       expect(subject.instance).to be_an_instance_of(subject)
     end
-  end
 
-  describe '.respond_to_missing?' do
-    it 'delegates to the instance and fallback to the class' do
+    it 'delegates missing methods to the instance' do
       expect(subject).to respond_to(:all)
-      expect(subject).to respond_to(:instance)
-    end
-  end
-
-  describe '.method_missing' do
-    it 'delegates to the instance and fallback to the class' do
       expect(subject.all).to eq [['Dummy text']]
+
+      expect(subject).to respond_to(:instance)
       expect { subject.asdf }.to raise_error(NoMethodError)
     end
   end
@@ -51,14 +45,14 @@ RSpec.describe AspireBudget::Worksheets::WorksheetBase do
     context 'when without arguments' do
       it 'configures an agent without a session/key' do
         subject.new
-        expect(configuration).to have_received(:agent).once.with(session: nil, spreadsheet_key: nil)
+        expect(configuration).to have_received(:agent).once.with(nil, nil)
       end
     end
 
     context 'when specifiying session and spreadsheet_key' do
       it 'configures an agent with the specified arguments' do
         subject.new(session: 'foo', spreadsheet_key: 'bar')
-        expect(configuration).to have_received(:agent).once.with(session: 'foo', spreadsheet_key: 'bar')
+        expect(configuration).to have_received(:agent).once.with('foo', 'bar')
       end
     end
   end

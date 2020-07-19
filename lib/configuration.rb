@@ -3,28 +3,17 @@
 require 'money'
 
 module AspireBudget
-  def self.configure
-    yield(configuration)
-  end
-
-  def self.configuration
-    @configuration ||= Configuration.new
-  end
-
-  def self.reset!
-    @configuration = Configuration.new
-  end
-
   class Configuration
-    attr_writer :session, :spreadsheet_key
+    # Authenticated GoogleDrive session
+    # @return [GoogleDrive::Session]
+    attr_accessor :session
 
-    def session
-      @session || raise('Please set session')
-    end
+    # Google spreadsheet key (as it is in the url)
+    # @return [String]
+    attr_accessor :spreadsheet_key
 
-    def spreadsheet_key
-      @spreadsheet_key || raise('Please set spreadsheet key')
-    end
+    # @!attribute currency
+    # @return [Money::Currency] configured currency (used for parsing cells)
 
     def currency=(value)
       @currency = Money::Currency.new(value)
@@ -34,16 +23,20 @@ module AspireBudget
       @currency ||= Money::Currency.new('EUR')
     end
 
-    def agent(session: nil, spreadsheet_key: nil)
-      if session.nil? || spreadsheet_key.nil?
-        @agent ||= self.session.spreadsheet_by_key(self.spreadsheet_key)
-      else
-        @agents ||= Hash.new do |h, k|
-          h[k] = session.spreadsheet_by_key(k.last)
-        end
-
-        @agents[[session, spreadsheet_key]]
+    # Build an agent using given +session+ and +spreadsheet_key+ (falling back
+    # to the configured ones).
+    # @return [GoogleDrive::Spreadsheet] an spreadsheet agent
+    # @param session [GoogleDrive::Session] will fallback to configured one if
+    #   not defined
+    # @param spreadsheet_key [String] will fallback to configured one if not
+    #   defined
+    def agent(session = nil, spreadsheet_key = nil)
+      @agents ||= Hash.new do |h, k|
+        h[k] = k.first.spreadsheet_by_key(k.last)
       end
+      @agents[
+        [session || self.session, spreadsheet_key || self.spreadsheet_key]
+      ]
     end
   end
 end

@@ -8,7 +8,6 @@ module AspireBudget
   module Worksheets
     class CategoryTransfers < Transactions
       WS_TITLE = 'Category Transfers'
-      MARGIN_LEFT = 1
 
       private
 
