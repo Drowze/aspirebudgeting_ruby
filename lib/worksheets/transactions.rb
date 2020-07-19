@@ -8,12 +8,18 @@ module AspireBudget
     class Transactions < WorksheetBase
       WS_TITLE = 'Transactions'
 
+      # @return [Array<AspireBudget::Transaction>] all transactions
       def all
         rows.map do |row|
           klass.from_row(header, row)
         end
       end
 
+      # Inserts a transaction to the spreadsheet. Accepts either a transaction
+      # record or a hash (that is passed to the transaction initializer)
+      # @see AspireBudget::Models::Transaction#initialize
+      # @param record [AspireBudget::Transaction, Hash]
+      # @return [AspireBudget::Transaction] a transaction
       def insert(record, sync: true)
         record = klass.new(**record) if record.is_a?(Hash)
         row = record.to_row(header)

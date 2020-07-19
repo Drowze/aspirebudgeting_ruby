@@ -4,7 +4,16 @@ require 'money'
 
 module AspireBudget
   class Configuration
-    attr_accessor :session, :spreadsheet_key
+    # Authenticated GoogleDrive session
+    # @return [GoogleDrive::Session]
+    attr_accessor :session
+
+    # Google spreadsheet key (as it is in the url)
+    # @return [String]
+    attr_accessor :spreadsheet_key
+
+    # @!attribute currency
+    # @return [Money::Currency] configured currency (used for parsing cells)
 
     def currency=(value)
       @currency = Money::Currency.new(value)
@@ -14,6 +23,13 @@ module AspireBudget
       @currency ||= Money::Currency.new('EUR')
     end
 
+    # Build an agent using given +session+ and +spreadsheet_key+ (falling back
+    # to the configured ones).
+    # @return [GoogleDrive::Spreadsheet] an spreadsheet agent
+    # @param session [GoogleDrive::Session] will fallback to configured one if
+    #   not defined
+    # @param spreadsheet_key [String] will fallback to configured one if not
+    #   defined
     def agent(session = nil, spreadsheet_key = nil)
       @agents ||= Hash.new do |h, k|
         h[k] = k.first.spreadsheet_by_key(k.last)

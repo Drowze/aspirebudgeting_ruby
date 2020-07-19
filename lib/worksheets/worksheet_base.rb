@@ -5,6 +5,8 @@ require 'utils'
 
 module AspireBudget
   module Worksheets
+    # @abstract Subclass and reimplement ws_title to implement a custom
+    #   worksheet
     class WorksheetBase
       include Utils
 
@@ -28,10 +30,15 @@ module AspireBudget
         end
       end
 
+      # @see AspireBudget::Configuration#agent
+      # @return a new instance of the calling class configured with an agent
+      # @param session [GoogleDrive::Session]
+      # @param spreadsheet_key [String] spreadsheet key as per its url
       def initialize(session: nil, spreadsheet_key: nil)
         @agent = AspireBudget.configuration.agent(session, spreadsheet_key)
       end
 
+      # @return [Boolean] Whether the worksheet has unsaved changes
       def dirty?
         ws.dirty?
       end
