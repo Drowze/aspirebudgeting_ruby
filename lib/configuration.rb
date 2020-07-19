@@ -3,18 +3,6 @@
 require 'money'
 
 module AspireBudget
-  def self.configure
-    yield(configuration)
-  end
-
-  def self.configuration
-    @configuration ||= Configuration.new
-  end
-
-  def self.reset!
-    @configuration = Configuration.new
-  end
-
   class Configuration
     attr_accessor :session, :spreadsheet_key
 

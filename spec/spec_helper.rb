@@ -13,7 +13,7 @@ require 'pry'
 require 'money'
 require 'support/google_drive_mock'
 require 'support/spreadsheet_version_helper'
-require 'configuration'
+require 'aspire_budget'
 
 Money.rounding_mode = BigDecimal::ROUND_HALF_EVEN
 
