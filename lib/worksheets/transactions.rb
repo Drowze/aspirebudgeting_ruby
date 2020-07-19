@@ -6,7 +6,6 @@ require 'models/transaction'
 module AspireBudget
   module Worksheets
     class Transactions < WorksheetBase
-      WS_TITLE = 'Transactions'
       MARGIN_LEFT = 1
 
       def all
@@ -27,6 +26,10 @@ module AspireBudget
 
       def klass
         Models::Transaction
+      end
+
+      def ws_title
+        'Transactions'
       end
 
       def next_row_col

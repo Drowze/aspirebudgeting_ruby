@@ -7,7 +7,6 @@ require 'models/category_transfer'
 module AspireBudget
   module Worksheets
     class CategoryTransfers < Transactions
-      WS_TITLE = 'Category Transfers'
       MARGIN_LEFT = 1
 
       private
@@ -20,6 +19,10 @@ module AspireBudget
         @header ||=
           super.map { |k| k == :'from category' ? :from : k }
                .map { |k| k == :'to category' ? :to : k }[0...-1]
+      end
+
+      def ws_title
+        'Category Transfers'
       end
     end
   end
