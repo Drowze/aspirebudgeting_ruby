@@ -16,15 +16,7 @@ module AspireBudget
   end
 
   class Configuration
-    attr_writer :session, :spreadsheet_key
-
-    def session
-      @session || raise('Please set session')
-    end
-
-    def spreadsheet_key
-      @spreadsheet_key || raise('Please set spreadsheet key')
-    end
+    attr_accessor :session, :spreadsheet_key
 
     def currency=(value)
       @currency = Money::Currency.new(value)
@@ -34,16 +26,13 @@ module AspireBudget
       @currency ||= Money::Currency.new('EUR')
     end
 
-    def agent(session: nil, spreadsheet_key: nil)
-      if session.nil? || spreadsheet_key.nil?
-        @agent ||= self.session.spreadsheet_by_key(self.spreadsheet_key)
-      else
-        @agents ||= Hash.new do |h, k|
-          h[k] = session.spreadsheet_by_key(k.last)
-        end
-
-        @agents[[session, spreadsheet_key]]
+    def agent(session = nil, spreadsheet_key = nil)
+      @agents ||= Hash.new do |h, k|
+        h[k] = k.first.spreadsheet_by_key(k.last)
       end
+      @agents[
+        [session || self.session, spreadsheet_key || self.spreadsheet_key]
+      ]
     end
   end
 end

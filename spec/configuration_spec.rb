@@ -25,7 +25,7 @@ RSpec.describe AspireBudget::Configuration do
       it 'uses the ones globally configured' do
         use_spreadsheet_version 'v3-2-0'
 
-        expect(AspireBudget.configuration.agent).to have_attributes(
+        expect(AspireBudget.configuration.agent(nil, nil)).to have_attributes(
           id: 'v3-2-0',
           title: 'aspire budget v3-2-0'
         )
@@ -37,8 +37,8 @@ RSpec.describe AspireBudget::Configuration do
         session1 = GoogleDrive.from_config('foo.json')
         session2 = GoogleDrive.from_config('bar.json')
 
-        agent1 = AspireBudget.configuration.agent(session: session1, spreadsheet_key: 'v3-2-0')
-        agent2 = AspireBudget.configuration.agent(session: session2, spreadsheet_key: 'v3-1-0')
+        agent1 = AspireBudget.configuration.agent(session1, 'v3-2-0')
+        agent2 = AspireBudget.configuration.agent(session2, 'v3-1-0')
 
         expect(agent1).to have_attributes(
           id: 'v3-2-0',
