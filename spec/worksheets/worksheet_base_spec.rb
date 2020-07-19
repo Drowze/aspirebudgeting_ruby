@@ -6,14 +6,10 @@ require 'worksheets/worksheet_base'
 RSpec.describe AspireBudget::Worksheets::WorksheetBase do
   subject do
     Class.new(described_class) do
+      self::WS_TITLE = 'Dummy'
+
       def all
         ws.rows
-      end
-
-      private
-
-      def ws_title
-        'Dummy'
       end
     end
   end
@@ -28,18 +24,6 @@ RSpec.describe AspireBudget::Worksheets::WorksheetBase do
   before do
     allow(AspireBudget).to receive(:configuration).and_return(configuration)
     allow(configuration).to receive(:agent).and_return(dummy_agent)
-  end
-
-  describe '#ws' do
-    context 'when #ws_title is defined' do
-      it { expect { subject.instance.send(:ws) }.not_to raise_error }
-    end
-
-    context 'when #ws_title is not defined' do
-      before { subject.send(:remove_method, :ws_title) }
-
-      it { expect { subject.instance.send(:ws) }.to raise_error(NotImplementedError) }
-    end
   end
 
   describe '.instance' do

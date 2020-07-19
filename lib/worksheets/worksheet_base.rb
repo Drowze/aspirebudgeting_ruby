@@ -37,11 +37,7 @@ module AspireBudget
       private
 
       def ws
-        worksheets[ws_title]
-      end
-
-      def ws_title
-        raise NotImplementedError
+        worksheets[self.class::WS_TITLE]
       end
 
       def worksheets
