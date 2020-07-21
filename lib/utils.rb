@@ -7,11 +7,6 @@ module AspireBudget
   module Utils
     class << self
       DATE_FORMAT = '%d/%m/%y'
-      TRANSACTION_STATUS_MAPPING = {
-        '✅' => :approved,
-        '🅿️' => :pending,
-        '*️⃣' => :reconciliation
-      }.freeze
 
       def parse_date(value)
         return parse_serial_date(value) if value.is_a?(Numeric)
@@ -39,6 +34,13 @@ module AspireBudget
       end
 
       private
+
+      TRANSACTION_STATUS_MAPPING = {
+        '✅' => :approved,
+        '🅿️' => :pending,
+        '*️⃣' => :reconciliation
+      }.freeze
+      private_constant :TRANSACTION_STATUS_MAPPING
 
       LOTUS_DAY_ONE = Date.new(1899, 12, 30).freeze
       private_constant :LOTUS_DAY_ONE
