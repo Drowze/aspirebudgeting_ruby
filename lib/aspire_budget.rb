@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'core_extensions'
+
 require 'configuration'
 
 require 'worksheets/backend_data'
