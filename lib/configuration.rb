@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'money'
-
 module AspireBudget
   class Configuration
     # Authenticated GoogleDrive session
@@ -11,17 +9,6 @@ module AspireBudget
     # Google spreadsheet key (as it is in the url)
     # @return [String]
     attr_accessor :spreadsheet_key
-
-    # @!attribute currency
-    # @return [Money::Currency] configured currency (used for parsing cells)
-
-    def currency=(value)
-      @currency = Money::Currency.new(value)
-    end
-
-    def currency
-      @currency ||= Money::Currency.new('EUR')
-    end
 
     # Build an agent using given +session+ and +spreadsheet_key+ (falling back
     # to the configured ones).

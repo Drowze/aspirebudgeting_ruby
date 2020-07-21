@@ -10,12 +10,9 @@ if ENV['CI']
 end
 
 require 'pry'
-require 'money'
 require 'support/google_drive_mock'
 require 'support/spreadsheet_version_helper'
 require 'aspire_budget'
-
-Money.rounding_mode = BigDecimal::ROUND_HALF_EVEN
 
 RSpec.configure do |config|
   config.disable_monkey_patching!
