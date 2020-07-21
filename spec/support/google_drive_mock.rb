@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'date'
+
 class GoogleDriveMock
   def self.from_config(_)
     Session.new
@@ -36,6 +38,10 @@ class GoogleDriveMock
   end
 
   class Worksheet
+    CURRENCY_REGEX = /^[$̂€]?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/.freeze
+    LOTUS_DAY_ONE = Date.new(1899, 12, 30).freeze
+    DATE_FORMAT = '%d/%m/%y'
+
     attr_reader :title
 
     def initialize(title, rows)
@@ -43,8 +49,17 @@ class GoogleDriveMock
       @rows = rows
     end
 
-    def rows(skip = 0)
-      @rows.drop(skip)
+    def rows(skip = 0, cell_method: :[])
+      case cell_method
+      when :[]
+        @rows.drop(skip)
+      when :numeric_value
+        @rows.map.with_index do |r, i|
+          r.map.with_index do |_c, j|
+            numeric_value(i + 1, j + 1)
+          end
+        end
+      end
     end
 
     def synchronize
@@ -92,6 +107,17 @@ class GoogleDriveMock
       end
 
       @rows[row - 1][col - 1] = value
+    end
+
+    # assumes that "," is not a decimal separator
+    # assumes date format as defined above
+    def numeric_value(*args)
+      value = self[*args]
+      if value.match?(CURRENCY_REGEX)
+        value.gsub(/[€$,]/, '').to_f
+      elsif value.match?(%r{\d+/\d+/\d+})
+        Float(Date.strptime(value, DATE_FORMAT) - LOTUS_DAY_ONE)
+      end
     end
 
     def update_cells(starting_row, starting_col, matrix)
