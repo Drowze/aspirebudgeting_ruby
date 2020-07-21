@@ -12,15 +12,14 @@ module AspireBudget
 
         params.tap do |h|
           h[:date] = Utils.parse_date(h[:date])
-          h[:amount] = Utils.parse_currency(h[:amount])
         end
 
         new(**params)
       end
 
       def initialize(date:, amount:, from:, to:, memo:)
-        @date = Utils.parse_date(date) || Date.today
-        @amount = amount
+        @date = date.nil? ? Date.today : Utils.parse_date(date)
+        @amount = amount.to_f
         @from = from || 'Available to Budget'
         @to = to
         @memo = memo
@@ -30,7 +29,6 @@ module AspireBudget
         header.map do |h|
           value = send(h)
           next Utils.serialize_date(value) if h == :date
-          next Utils.serialize_currency(value) if h == :amount
 
           value
         end

@@ -8,7 +8,7 @@ RSpec.describe AspireBudget::Utils do
     context 'when value is a float' do
       it 'coverts it using "days after lotus day one"' do
         expect(described_class.parse_date(0.0)).to eq Date.new(1899, 12, 30)
-        expect(described_class.parse_date(25569.0)).to eq Date.new(1970, 1, 1)
+        expect(described_class.parse_date(25_569.0)).to eq Date.new(1970, 1, 1)
       end
     end
 

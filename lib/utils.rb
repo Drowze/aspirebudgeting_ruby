@@ -21,6 +21,10 @@ module AspireBudget
         raise 'Unsupported date format'
       end
 
+      def parse_currency(value)
+        value && Monetize.parse(value, AspireBudget.configuration.currency).to_f
+      end
+
       def serialize_date(value)
         return Float(value) if value.is_a?(Numeric) && value >= 0
 
@@ -29,10 +33,6 @@ module AspireBudget
         raise "Date should be after #{LOTUS_DAY_ONE}" if LOTUS_DAY_ONE > value
 
         Float(value - LOTUS_DAY_ONE)
-      end
-
-      def parse_currency(value)
-        value && Monetize.parse(value, AspireBudget.configuration.currency).to_f
       end
 
       def serialize_currency(value)

@@ -12,8 +12,6 @@ module AspireBudget
 
         params.tap do |h|
           h[:date] = Utils.parse_date(h[:date])
-          h[:outflow] = Utils.parse_currency(h[:outflow])
-          h[:inflow] = Utils.parse_currency(h[:inflow])
           h[:status] = Utils.parse_status(h[:status])
         end
 
@@ -22,9 +20,9 @@ module AspireBudget
 
       # rubocop:disable Metrics/ParameterLists
       def initialize(date:, outflow:, inflow:, category:, account:, memo:, status:)
-        @date = Utils.parse_date(date) || Date.today
-        @outflow = outflow || 0.0
-        @inflow = inflow || 0.0
+        @date = date.nil? ? Date.today : Utils.parse_date(date)
+        @outflow = outflow.to_f
+        @inflow = inflow.to_f
         @category = category
         @account = account
         @memo = memo
@@ -37,7 +35,6 @@ module AspireBudget
           value = send(h)
           next Utils.serialize_date(value) if h == :date
           next Utils.serialize_status(value) if h == :status
-          next Utils.serialize_currency(value) if %i[inflow outflow].include?(h)
 
           value
         end
