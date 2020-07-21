@@ -15,15 +15,20 @@ module AspireBudget
       }.freeze
 
       def parse_date(value)
-        return value unless value.is_a?(String)
+        return parse_serial_date(value) if value.is_a?(Numeric)
+        return value.to_date if value.respond_to?(:to_date)
 
-        Date.strptime(value, DATE_FORMAT)
+        raise 'Unsupported date format'
       end
 
       def serialize_date(value)
-        return value unless value.respond_to?(:strftime)
+        return Float(value) if value.is_a?(Numeric) && value >= 0
 
-        value.strftime(DATE_FORMAT)
+        value = value.to_date if value.respond_to?(:to_date)
+        raise 'Unsupported date value' unless value.is_a?(Date)
+        raise "Date should be after #{LOTUS_DAY_ONE}" if LOTUS_DAY_ONE > value
+
+        Float(value - LOTUS_DAY_ONE)
       end
 
       def parse_currency(value)
@@ -40,6 +45,15 @@ module AspireBudget
 
       def serialize_status(value)
         TRANSACTION_STATUS_MAPPING.key(value) || ''
+      end
+
+      private
+
+      LOTUS_DAY_ONE = Date.new(1899, 12, 30).freeze
+      private_constant :LOTUS_DAY_ONE
+
+      def parse_serial_date(days_after_lotus_day_one)
+        LOTUS_DAY_ONE + days_after_lotus_day_one
       end
     end
   end
