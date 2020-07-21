@@ -49,17 +49,15 @@ class GoogleDriveMock
       @rows = rows
     end
 
-    def rows(skip = 0, cell_method: :[])
-      case cell_method
-      when :[]
-        @rows.drop(skip)
-      when :numeric_value
-        @rows.map.with_index do |r, i|
-          r.map.with_index do |_c, j|
-            numeric_value(i + 1, j + 1)
-          end
-        end
-      end
+    def rows(skip = 0)
+      @rows.drop(skip)
+    end
+
+    def rows_with_numerics(skip = 0)
+      nc = num_cols
+      ((1 + skip)..num_rows).map do |row|
+        (1..nc).map { |col| numeric_value(row, col) || self[row, col] }.freeze
+      end.freeze
     end
 
     def synchronize
@@ -88,7 +86,7 @@ class GoogleDriveMock
         else
           args
         end
-      rows[row - 1][col - 1]
+      rows[row - 1][col - 1].to_s
     end
 
     def []=(row, col, value) # rubocop:disable Metrics/MethodLength
