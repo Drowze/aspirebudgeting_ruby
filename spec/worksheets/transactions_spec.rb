@@ -56,9 +56,16 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
       end
 
       describe '#insert' do
+        before do
+          treat_cells_as(
+            date: [[13, 2]],
+            currency: [[13, 3], [13, 4]]
+          )
+        end
+
         let(:params) do
           {
-            date: '03/06/2020',
+            date: Date.parse('2020-06-03'),
             outflow: 900,
             inflow: 800,
             category: 'Test',
@@ -101,7 +108,7 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
             allow(transaction)
               .to receive(:to_row)
               .with(%i[date outflow inflow category account memo status])
-              .and_return(['03/06/20', '900.00', '800.00', 'Test', '💰 Checking', 'ruby', '✅'])
+              .and_return([43_985.0, 900.00, 800.00, 'Test', '💰 Checking', 'ruby', '✅'])
           end
 
           it 'inserts new data' do

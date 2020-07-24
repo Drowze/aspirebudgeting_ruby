@@ -32,8 +32,12 @@ RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
       end
 
       describe '#insert' do
+        before do
+          treat_cells_as(date: [[11, 2]], currency: [[11, 3]])
+        end
+
         let(:params) do
-          { date: '03/06/2020', amount: 120.43, from: 'Available to budget', to: 'Groceries', memo: 'ruby' }
+          { date: Date.parse('2020-06-03'), amount: 120.43, from: 'Available to budget', to: 'Groceries', memo: 'ruby' }
         end
         let(:new_record_attributes) do
           {
@@ -52,7 +56,7 @@ RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
               .to change { subject.all.size }
               .by(1)
 
-            expect(new_record).to have_attributes(new_record_attributes)
+            expect(subject.all.last).to have_attributes(new_record_attributes)
 
             expect(subject).not_to be_dirty
           end
@@ -67,7 +71,7 @@ RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
             allow(category_transfer)
               .to receive(:to_row)
               .with(%i[date amount from to memo])
-              .and_return(['03/06/20', '120.43', 'Available to budget', 'Groceries', 'ruby'])
+              .and_return([43_985.0, 120.43, 'Available to budget', 'Groceries', 'ruby'])
           end
 
           it 'inserts new data' do
@@ -76,7 +80,7 @@ RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
               .to change { subject.all.size }
               .by(1)
 
-            expect(new_record).to have_attributes(new_record_attributes)
+            expect(subject.all.last).to have_attributes(new_record_attributes)
 
             expect(subject).not_to be_dirty
           end

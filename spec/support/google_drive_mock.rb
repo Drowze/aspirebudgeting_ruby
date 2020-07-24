@@ -86,10 +86,11 @@ class GoogleDriveMock
         else
           args
         end
-      rows[row - 1][col - 1].to_s
+
+      rows[row - 1][col - 1]
     end
 
-    def []=(row, col, value) # rubocop:disable Metrics/MethodLength
+    def []=(row, col, value) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       @dirty = true
 
       if row > num_rows
@@ -104,15 +105,21 @@ class GoogleDriveMock
         end
       end
 
-      @rows[row - 1][col - 1] = value
+      value = treat_value(row, col, value) || value
+
+      @rows[row - 1][col - 1] = value.to_s
     end
+
+    # treat the values (e.g. convert to date or currency)
+    # used by #treat_cells_as test helper
+    def treat_value(row, col, value); end
 
     # assumes that "," is not a decimal separator
     # assumes date format as defined above
     def numeric_value(*args)
-      value = self[*args]
+      value = self[*args].to_s
       if value.match?(CURRENCY_REGEX)
-        value.gsub(/[€$,]/, '').to_f
+        Float(value.gsub(/[€$,]/, ''))
       elsif value.match?(%r{\d+/\d+/\d+})
         Float(Date.strptime(value, DATE_FORMAT) - LOTUS_DAY_ONE)
       end

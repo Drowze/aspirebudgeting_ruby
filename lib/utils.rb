@@ -1,13 +1,10 @@
 # frozen_string_literal: true
 
 require 'date'
-require 'configuration'
 
 module AspireBudget
   module Utils
     class << self
-      DATE_FORMAT = '%d/%m/%y'
-
       def parse_date(value)
         return parse_serial_date(value) if value.is_a?(Numeric)
         return value.to_date if value.respond_to?(:to_date)
