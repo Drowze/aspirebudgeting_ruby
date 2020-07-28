@@ -27,7 +27,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'google_drive', '~> 3.0'
-  spec.add_runtime_dependency 'monetize', '~> 1.9'
 
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake', '~> 13.0'

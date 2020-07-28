@@ -25,7 +25,7 @@ module AspireBudget
         row = record.to_row(header)
         ws.update_cells(*next_row_col, [row])
         ws.synchronize if sync
-        klass.from_row(header, sanitize(ws.rows.last))
+        record
       end
 
       private
@@ -40,17 +40,17 @@ module AspireBudget
       end
 
       def next_row_col
-        [ws.rows.size + 1, margin_left + 1]
+        [ws.num_rows + 1, margin_left + 1]
       end
 
       def sanitize(row)
-        return if row.all?(&:empty?)
+        return if row.all? { |cell| cell == '' }
 
         row.drop(margin_left)
       end
 
       def rows
-        ws.rows(header_location)
+        ws.rows_with_numerics(header_location)
           .map(&method(:sanitize)).compact
       end
 
