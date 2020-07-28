@@ -14,17 +14,7 @@ RSpec.describe AspireBudget::Worksheets::WorksheetBase do
     end
   end
 
-  let(:configuration) { instance_double(AspireBudget::Configuration) }
-  let(:dummy_agent) do
-    title = 'Dummy'
-    rows = [['Dummy text']]
-    double(worksheets: [GoogleDriveMock::Worksheet.new(title, rows)])
-  end
-
-  before do
-    allow(AspireBudget).to receive(:configuration).and_return(configuration)
-    allow(configuration).to receive(:agent).and_return(dummy_agent)
-  end
+  before { use_spreadsheet_version 'ws_dummy' }
 
   describe '.instance' do
     it 'returns an instance of the worksheet and memoizes it' do
@@ -44,15 +34,17 @@ RSpec.describe AspireBudget::Worksheets::WorksheetBase do
   describe '.initialize' do
     context 'when without arguments' do
       it 'configures an agent without a session/key' do
+        allow(AspireBudget.configuration).to receive(:agent)
         subject.new
-        expect(configuration).to have_received(:agent).once.with(nil, nil)
+        expect(AspireBudget.configuration).to have_received(:agent).once.with(nil, nil)
       end
     end
 
     context 'when specifiying session and spreadsheet_key' do
       it 'configures an agent with the specified arguments' do
+        allow(AspireBudget.configuration).to receive(:agent)
         subject.new(session: 'foo', spreadsheet_key: 'bar')
-        expect(configuration).to have_received(:agent).once.with('foo', 'bar')
+        expect(AspireBudget.configuration).to have_received(:agent).once.with('foo', 'bar')
       end
     end
   end

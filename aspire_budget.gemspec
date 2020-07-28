@@ -29,8 +29,10 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'google_drive', '~> 3.0'
 
   spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'pry-stack_explorer', '~> 0.4.0'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 0.88.0'
   spec.add_development_dependency 'simplecov', '~> 0.17.0'
+  spec.add_development_dependency 'webmock'
 end

@@ -5,10 +5,8 @@ require 'worksheets/category_transfers'
 
 RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
   %w[v3-2-0 v3-1-0].each do |version|
-    let(:aspire_version) { version }
-
     context "When using #{version}" do
-      before { use_spreadsheet_version(aspire_version) }
+      before { use_spreadsheet_version(version) }
 
       describe '#all' do
         it 'lists the category transfers' do
@@ -32,10 +30,6 @@ RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
       end
 
       describe '#insert' do
-        before do
-          treat_cells_as(date: [[11, 2]], currency: [[11, 3]])
-        end
-
         let(:params) do
           { date: Date.parse('2020-06-03'), amount: 120.43, from: 'Available to budget', to: 'Groceries', memo: 'ruby' }
         end
@@ -57,6 +51,7 @@ RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
               .by(1)
 
             expect(subject.all.last).to have_attributes(new_record_attributes)
+            expect(new_record).to have_attributes(new_record_attributes)
 
             expect(subject).not_to be_dirty
           end
@@ -81,6 +76,7 @@ RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
               .by(1)
 
             expect(subject.all.last).to have_attributes(new_record_attributes)
+            expect(new_record).to have_attributes(new_record_attributes)
 
             expect(subject).not_to be_dirty
           end

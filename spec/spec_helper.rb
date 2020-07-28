@@ -11,15 +11,26 @@ if ENV['CI']
 end
 
 require 'pry'
-require 'support/google_drive_mock'
+require 'google_drive'
 require 'support/spreadsheet_mock_helpers'
+require 'support/google_api_mock'
 require 'aspire_budget'
+require 'webmock/rspec'
+
+WebMock.disable_net_connect!
 
 RSpec.configure do |config|
   config.disable_monkey_patching!
 
   config.before do
     AspireBudget.reset!
-    stub_const('GoogleDrive', GoogleDriveMock)
+    ss_repo = GoogleApiMock::SpreadsheetsRepo.new
+
+    allow(Google::Apis::DriveV3::DriveService)
+      .to receive(:new)
+      .and_return(GoogleApiMock::DriveService.new(ss_repo))
+    allow(Google::Apis::SheetsV4::SheetsService)
+      .to receive(:new)
+      .and_return(GoogleApiMock::SheetsService.new(ss_repo))
   end
 end
