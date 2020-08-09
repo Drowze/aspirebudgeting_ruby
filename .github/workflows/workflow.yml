@@ -29,8 +29,7 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: bundle exec rspec
-          debug: true
+          coverageCommand: bundle exec rspec --format progress
           coverageLocations: coverage/.resultset.json:simplecov
       - name: Publish coverage on Codecov
         uses: codecov/codecov-action@v1.0.10
@@ -58,4 +57,4 @@ jobs:
           gem install bundler
           bundler install
       - name: Run RSpec
-        run: bundle exec rspec
+        run: bundle exec rspec --format progress

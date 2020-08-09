@@ -5,10 +5,8 @@ require 'worksheets/transactions'
 
 RSpec.describe AspireBudget::Worksheets::Transactions do
   %w[v3-2-0 v3-1-0].each do |version|
-    let(:aspire_version) { version }
-
     context "When using #{version}" do
-      before { use_spreadsheet_version(aspire_version) }
+      before { use_spreadsheet_version(version) }
 
       describe '#all' do
         it 'lists the transactions' do
@@ -17,7 +15,7 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
               account: '💰 Checking',
 
               # Aspire added the category 'starting on balance' on v3-2-0
-              category: aspire_version == 'v3-2-0' ? '➡️ Starting Balance' : '🔢 Balance Adjustment',
+              category: version == 'v3-2-0' ? '➡️ Starting Balance' : '🔢 Balance Adjustment',
               date: Date.parse('2020-06-03'),
               inflow: 12_000.to_f,
               outflow: 0.to_f,
@@ -56,13 +54,6 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
       end
 
       describe '#insert' do
-        before do
-          treat_cells_as(
-            date: [[13, 2]],
-            currency: [[13, 3], [13, 4]]
-          )
-        end
-
         let(:params) do
           {
             date: Date.parse('2020-06-03'),

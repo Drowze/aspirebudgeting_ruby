@@ -6,12 +6,12 @@ RSpec.describe AspireBudget::Configuration do
   describe '.configure' do
     it 'sets the configuration variables' do
       AspireBudget.configure do |config|
-        config.session = GoogleDrive.from_config('foo.json')
+        config.session = GoogleDrive::Session.new(Object)
         config.spreadsheet_key = 'v3-2-0'
       end
 
       expect(AspireBudget.configuration).to have_attributes(
-        session: an_instance_of(GoogleDriveMock::Session),
+        session: an_instance_of(GoogleDrive::Session),
         spreadsheet_key: 'v3-2-0'
       )
     end
@@ -31,8 +31,8 @@ RSpec.describe AspireBudget::Configuration do
 
     context 'when passing the configuration variables' do
       it 'uses them' do
-        session1 = GoogleDrive.from_config('foo.json')
-        session2 = GoogleDrive.from_config('bar.json')
+        session1 = GoogleDrive::Session.new(Object)
+        session2 = GoogleDrive::Session.new(Object)
 
         agent1 = AspireBudget.configuration.agent(session1, 'v3-2-0')
         agent2 = AspireBudget.configuration.agent(session2, 'v3-1-0')
