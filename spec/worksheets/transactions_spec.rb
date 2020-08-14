@@ -15,7 +15,7 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
               account: '💰 Checking',
 
               # Aspire added the category 'starting on balance' on v3-2-0
-              category: version == 'v3-2-0' ? '➡️ Starting Balance' : '🔢 Balance Adjustment',
+              category: version == 'v3-2-0' ? '➡️ Starting Balance' : 'Available to budget',
               date: Date.parse('2020-06-03'),
               inflow: 12_000.to_f,
               outflow: 0.to_f,
