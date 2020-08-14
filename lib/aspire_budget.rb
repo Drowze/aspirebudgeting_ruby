@@ -7,6 +7,7 @@ require 'configuration'
 require 'worksheets/backend_data'
 require 'worksheets/transactions'
 require 'worksheets/category_transfers'
+require 'worksheets/dashboard'
 
 require 'models/transaction'
 require 'models/category_transfer'

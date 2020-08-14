@@ -30,17 +30,28 @@ module AspireBudget
         end
       end
 
-      # @see AspireBudget::Configuration#agent
-      # @return a new instance of the calling class configured with an agent
+      # Initializes the worksheet. To use the spreadsheet default
+      # +session+ / +spreadsheet_key+, just initialize without arguments.
       # @param session [GoogleDrive::Session]
       # @param spreadsheet_key [String] spreadsheet key as per its url
-      def initialize(session: nil, spreadsheet_key: nil)
-        @agent = AspireBudget.configuration.agent(session, spreadsheet_key)
+      # @param agent [GoogleDrive::Spreadsheet] an spreadsheet agent
+      #   (used internally only)
+      def initialize(session: nil, spreadsheet_key: nil, agent: nil)
+        @agent = agent
+        @session = session
+        @spreadsheet_key = spreadsheet_key
       end
 
       # @return [Boolean] Whether the worksheet has unsaved changes
       def dirty?
         ws.dirty?
+      end
+
+      # @return [String] the spreadsheet version
+      # @see AspireBudget::Worksheets::BackendData#version
+      def spreadsheet_version
+        @backend_data ||= BackendData.new(agent: agent)
+        @backend_data.version
       end
 
       private
@@ -51,7 +62,11 @@ module AspireBudget
 
       def worksheets
         @worksheets ||=
-          @agent.worksheets.reduce({}) { |h, sheet| h.merge(sheet.title => sheet) }
+          agent.worksheets.reduce({}) { |h, sheet| h.merge(sheet.title => sheet) }
+      end
+
+      def agent
+        @agent ||= AspireBudget.configuration.agent(@session, @spreadsheet_key)
       end
     end
   end

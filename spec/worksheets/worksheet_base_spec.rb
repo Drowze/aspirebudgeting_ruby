@@ -31,21 +31,18 @@ RSpec.describe AspireBudget::Worksheets::WorksheetBase do
     end
   end
 
-  describe '.initialize' do
-    context 'when without arguments' do
-      it 'configures an agent without a session/key' do
-        allow(AspireBudget.configuration).to receive(:agent)
-        subject.new
-        expect(AspireBudget.configuration).to have_received(:agent).once.with(nil, nil)
-      end
+  describe '#spreadsheet_version' do
+    before do
+      backend_data = double
+      allow(AspireBudget::Worksheets::BackendData)
+        .to receive(:new)
+        .with(agent: an_instance_of(GoogleDrive::Spreadsheet))
+        .and_return(backend_data)
+      allow(backend_data).to receive(:version).and_return('0.0.0')
     end
 
-    context 'when specifiying session and spreadsheet_key' do
-      it 'configures an agent with the specified arguments' do
-        allow(AspireBudget.configuration).to receive(:agent)
-        subject.new(session: 'foo', spreadsheet_key: 'bar')
-        expect(AspireBudget.configuration).to have_received(:agent).once.with('foo', 'bar')
-      end
+    it 'initializes the backenddata spreadsheet and calls #version on it' do
+      expect(subject.spreadsheet_version).to eq '0.0.0'
     end
   end
 end
