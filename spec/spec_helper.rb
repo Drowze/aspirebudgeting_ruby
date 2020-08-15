@@ -10,12 +10,14 @@ if ENV['CI']
   end
 end
 
-require 'pry'
-require 'google_drive'
-require 'support/spreadsheet_mock_helpers'
-require 'support/google_api_mock'
 require 'aspire_budget'
+
+require 'google_drive'
 require 'webmock/rspec'
+require 'pry'
+
+require_relative 'support/spreadsheet_mock_helpers'
+require_relative 'support/google_api_mock'
 
 WebMock.disable_net_connect!
 

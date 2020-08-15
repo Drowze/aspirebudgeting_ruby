@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './spreadsheet'
+require_relative 'spreadsheet'
 
 module GoogleApiMock
   class SpreadsheetsRepo

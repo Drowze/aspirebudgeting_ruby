@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'aspire_budget/core_extensions'
+require_relative 'aspire_budget/core_extensions'
 
-require 'aspire_budget/version'
-require 'aspire_budget/configuration'
+require_relative 'aspire_budget/version'
+require_relative 'aspire_budget/configuration'
 
-require 'aspire_budget/worksheets/backend_data'
-require 'aspire_budget/worksheets/transactions'
-require 'aspire_budget/worksheets/category_transfers'
+require_relative 'aspire_budget/worksheets/backend_data'
+require_relative 'aspire_budget/worksheets/transactions'
+require_relative 'aspire_budget/worksheets/category_transfers'
 
-require 'aspire_budget/models/transaction'
-require 'aspire_budget/models/category_transfer'
+require_relative 'aspire_budget/models/transaction'
+require_relative 'aspire_budget/models/category_transfer'
 
 module AspireBudget
   def self.configure

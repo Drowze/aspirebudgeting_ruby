@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'aspire_budget/configuration'
-require 'aspire_budget/utils'
+require_relative '../configuration'
+require_relative '../utils'
 
 module AspireBudget
   module Worksheets

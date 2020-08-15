@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative './sheet'
-require_relative './load_fixture'
+require_relative 'sheet'
+require_relative 'load_fixture'
 
 module GoogleApiMock
   class Spreadsheet

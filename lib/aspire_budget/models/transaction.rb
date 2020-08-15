@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'aspire_budget/utils'
+require_relative '../utils'
 
 module AspireBudget
   module Models

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'aspire_budget/worksheets/worksheet_base'
+require_relative 'worksheet_base'
 
 module AspireBudget
   module Worksheets
