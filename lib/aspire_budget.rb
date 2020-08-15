@@ -11,17 +11,3 @@ require_relative 'aspire_budget/worksheets/category_transfers'
 
 require_relative 'aspire_budget/models/transaction'
 require_relative 'aspire_budget/models/category_transfer'
-
-module AspireBudget
-  def self.configure
-    yield(configuration)
-  end
-
-  def self.configuration
-    @configuration ||= Configuration.new
-  end
-
-  def self.reset!
-    @configuration = Configuration.new
-  end
-end

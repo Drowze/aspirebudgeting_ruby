@@ -1,6 +1,22 @@
 # frozen_string_literal: true
 
 module AspireBudget
+  class << self
+    attr_writer :configuration
+  end
+
+  def self.configure
+    yield(configuration) if block_given?
+  end
+
+  def self.configuration
+    @configuration ||= Configuration.new
+  end
+
+  def self.reset!
+    @configuration = nil
+  end
+
   class Configuration
     # Authenticated GoogleDrive session
     # @return [GoogleDrive::Session]

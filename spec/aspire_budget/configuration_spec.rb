@@ -3,13 +3,14 @@
 require 'aspire_budget/configuration'
 
 RSpec.describe AspireBudget::Configuration do
-  describe '.configure' do
+  describe 'AspireBudget.configure' do
     it 'sets the configuration variables' do
       AspireBudget.configure do |config|
         config.session = GoogleDrive::Session.new(Object)
         config.spreadsheet_key = 'v3-2-0'
       end
 
+      expect(AspireBudget.configuration).to be_an_instance_of(described_class)
       expect(AspireBudget.configuration).to have_attributes(
         session: an_instance_of(GoogleDrive::Session),
         spreadsheet_key: 'v3-2-0'
@@ -17,7 +18,25 @@ RSpec.describe AspireBudget::Configuration do
     end
   end
 
-  describe '.configuration.agent' do
+  describe 'AspireBudget.reset!' do
+    it 'resets the configuration' do
+      AspireBudget.configure do |config|
+        config.session = GoogleDrive::Session.new(Object)
+        config.spreadsheet_key = 'v3-2-0'
+      end
+
+      expect { AspireBudget.reset! }
+        .to change { AspireBudget.instance_variable_get(:@configuration) }
+        .from(an_instance_of(described_class)).to(nil)
+      expect { AspireBudget.configuration }
+        .to change { AspireBudget.instance_variable_get(:@configuration) }
+        .from(nil).to(an_instance_of(described_class))
+      expect(AspireBudget.configuration)
+        .to be(AspireBudget.instance_variable_get(:@configuration))
+    end
+  end
+
+  describe '.agent' do
     context 'when not passing the configuration variables' do
       it 'uses the ones globally configured' do
         use_spreadsheet_version 'v3-2-0'

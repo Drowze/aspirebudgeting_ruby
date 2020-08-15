@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
 require_relative '../configuration'
-require_relative '../utils'
 
 module AspireBudget
   module Worksheets
     # @abstract Subclass and reimplement ws_title to implement a custom
     #   worksheet
     class WorksheetBase
-      include Utils
-
       class << self
         def instance
           @instance ||= new
