@@ -16,7 +16,6 @@ require 'google_drive'
 require 'webmock/rspec'
 require 'pry'
 
-require_relative 'support/spreadsheet_mock_helpers'
 require_relative 'support/google_api_mock'
 
 WebMock.disable_net_connect!
@@ -25,7 +24,6 @@ RSpec.configure do |config|
   config.disable_monkey_patching!
 
   config.before do
-    AspireBudget.reset!
     ss_repo = GoogleApiMock::SpreadsheetsRepo.new
 
     allow(Google::Apis::DriveV3::DriveService)
