@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'worksheets/worksheet_base'
-require 'worksheets/transactions'
-require 'models/category_transfer'
+require 'aspire_budget/worksheets/worksheet_base'
+require 'aspire_budget/worksheets/transactions'
+require 'aspire_budget/models/category_transfer'
 
 module AspireBudget
   module Worksheets

@@ -5,7 +5,7 @@ require 'bundler/setup'
 if ENV['CI']
   require 'simplecov'
   SimpleCov.start do
-    add_filter 'lib/core_extensions.rb'
+    add_filter 'lib/aspire_budget/core_extensions.rb'
     add_filter %r{^/spec/}
   end
 end

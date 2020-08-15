@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'configuration'
-require 'utils'
+require 'aspire_budget/configuration'
+require 'aspire_budget/utils'
 
 module AspireBudget
   module Worksheets
@@ -35,7 +35,9 @@ module AspireBudget
       # @param session [GoogleDrive::Session]
       # @param spreadsheet_key [String] spreadsheet key as per its url
       def initialize(session: nil, spreadsheet_key: nil)
-        @agent = AspireBudget.configuration.agent(session, spreadsheet_key)
+        @session = session
+        @spreadsheet_key = spreadsheet_key
+        @agent = AspireBudget.configuration.agent(@session, @spreadsheet_key)
       end
 
       # @return [Boolean] Whether the worksheet has unsaved changes

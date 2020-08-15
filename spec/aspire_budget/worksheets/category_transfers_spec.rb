@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'date'
-require 'worksheets/category_transfers'
+require 'aspire_budget/worksheets/category_transfers'
 
 RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
   %w[v3-2-0 v3-1-0].each do |version|

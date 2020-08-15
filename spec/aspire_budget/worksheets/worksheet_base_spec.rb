@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'date'
-require 'worksheets/worksheet_base'
+require 'aspire_budget/worksheets/worksheet_base'
 
 RSpec.describe AspireBudget::Worksheets::WorksheetBase do
   subject do

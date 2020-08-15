@@ -8,7 +8,7 @@ require 'aspire_budget'
 class ManageFixtures
   include Rake::DSL
 
-  FIXTURES_RELATIVE_PATH = '../spec/fixtures/'
+  FIXTURES_RELATIVE_PATH = '../spec/support/fixtures/'
 
   SPREADSHEET_KEYS = {
     'v3-1-0' => '1RHgsiisoZRsMVUp286UV9SipGIDYKxgAuzkkGzWeV2A',

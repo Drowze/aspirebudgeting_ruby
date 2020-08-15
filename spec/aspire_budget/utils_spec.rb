@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'date'
-require 'utils'
+require 'aspire_budget/utils'
 
 RSpec.describe AspireBudget::Utils do
   describe '.parse_date' do

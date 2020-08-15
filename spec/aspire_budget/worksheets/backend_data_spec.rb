@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'date'
-require 'worksheets/backend_data'
+require 'aspire_budget/worksheets/backend_data'
 
 RSpec.describe AspireBudget::Worksheets::BackendData do
   describe '#version' do

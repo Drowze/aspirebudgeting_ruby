@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'utils'
+require 'aspire_budget/utils'
 
 module SpreadsheetMockHelpers
   def use_spreadsheet_version(version)

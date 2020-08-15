@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'configuration'
+require 'aspire_budget/configuration'
 
 RSpec.describe AspireBudget::Configuration do
   describe '.configure' do

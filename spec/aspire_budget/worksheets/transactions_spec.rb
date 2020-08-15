@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'date'
-require 'worksheets/transactions'
+require 'aspire_budget/worksheets/transactions'
 
 RSpec.describe AspireBudget::Worksheets::Transactions do
   %w[v3-2-0 v3-1-0].each do |version|
