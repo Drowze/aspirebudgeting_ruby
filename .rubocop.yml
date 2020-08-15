@@ -1,8 +1,7 @@
 AllCops:
+  NewCops: enable
   Exclude:
     - 'bin/console'
-
-  NewCops: enable
 
 Metrics/AbcSize:
   Max: 20
@@ -16,3 +15,10 @@ Metrics/MethodLength:
 
 Style/Documentation:
   Enabled: false
+
+Style/DocumentationMethod:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*.rb'
+    - 'tasks/*.rake'
+    - 'lib/aspire_budget/models/*.rb' # TODO: refactor and enable
