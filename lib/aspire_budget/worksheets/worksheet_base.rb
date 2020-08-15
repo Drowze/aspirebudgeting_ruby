@@ -8,6 +8,7 @@ module AspireBudget
     #   worksheet
     class WorksheetBase
       class << self
+        # @return an instance of the current object
         def instance
           @instance ||= new
         end

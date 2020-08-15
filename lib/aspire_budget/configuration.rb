@@ -5,14 +5,17 @@ module AspireBudget
     attr_writer :configuration
   end
 
+  # Configures default values
   def self.configure
     yield(configuration) if block_given?
   end
 
+  # @return [AspireBudget::Configuration] the current configured defaults
   def self.configuration
     @configuration ||= Configuration.new
   end
 
+  # Resets the set configuration. Useful on e.g. testing
   def self.reset!
     @configuration = nil
   end
