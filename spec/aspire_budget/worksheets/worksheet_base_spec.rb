@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
+require_relative '../../support/spreadsheet_mock_helpers'
+
 require 'date'
-require 'worksheets/worksheet_base'
+require 'aspire_budget/worksheets/worksheet_base'
 
 RSpec.describe AspireBudget::Worksheets::WorksheetBase do
+  include SpreadsheetMockHelpers
+
   subject do
     Class.new(described_class) do
       self::WS_TITLE = 'Dummy'
@@ -14,7 +18,9 @@ RSpec.describe AspireBudget::Worksheets::WorksheetBase do
     end
   end
 
-  before { use_spreadsheet_version 'ws_dummy' }
+  before do
+    AspireBudget.configuration = worksheet_config_for('ws_dummy')
+  end
 
   describe '.instance' do
     it 'returns an instance of the worksheet and memoizes it' do

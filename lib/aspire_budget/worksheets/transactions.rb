@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'worksheets/worksheet_base'
-require 'models/transaction'
+require_relative 'worksheet_base'
+require_relative '../models/transaction'
 
 module AspireBudget
   module Worksheets

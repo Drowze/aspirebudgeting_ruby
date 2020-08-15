@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
+require_relative '../../support/spreadsheet_mock_helpers'
+
 require 'date'
-require 'worksheets/transactions'
+require 'aspire_budget/worksheets/transactions'
 
 RSpec.describe AspireBudget::Worksheets::Transactions do
+  include SpreadsheetMockHelpers
+
   %w[v3-2-0 v3-1-0].each do |version|
     context "When using #{version}" do
-      before { use_spreadsheet_version(version) }
+      subject { worksheet_version(version) }
 
       describe '#all' do
         it 'lists the transactions' do

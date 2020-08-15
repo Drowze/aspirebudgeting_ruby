@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './row_data'
+require_relative 'row_data'
 
 module GoogleApiMock
   class Sheet

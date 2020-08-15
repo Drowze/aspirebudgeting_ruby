@@ -3,7 +3,7 @@
 module GoogleApiMock
   class Fixtures
     class << self
-      FIXTURES_PATH = "#{__dir__}/../../fixtures/"
+      FIXTURES_PATH = "#{__dir__}/../../support/fixtures/"
 
       def load_data(version)
         @load_data ||= {}

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './cell_data'
+require_relative 'cell_data'
 
 module GoogleApiMock
   class RowData
