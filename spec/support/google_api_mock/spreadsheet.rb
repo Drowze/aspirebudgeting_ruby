@@ -36,7 +36,7 @@ module GoogleApiMock
     def modify_sheet_order(opts)
       ranges = opts[:ranges]
       if ranges
-        ranges.gsub!("'", '')
+        ranges.delete!("'")
         first_sheet = sheets.find { |s| s.properties.title == ranges }
         sheets_without_first = sheets.reject { |s| s.properties.title == ranges }
         @sheets = [first_sheet, *sheets_without_first]

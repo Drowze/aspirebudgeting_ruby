@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 module AspireBudget
-  class << self
-    attr_writer :configuration
-  end
-
   # Configures default values
   def self.configure
     yield(configuration) if block_given?
@@ -12,12 +8,18 @@ module AspireBudget
 
   # @return [AspireBudget::Configuration] the current configured defaults
   def self.configuration
-    @configuration ||= Configuration.new
+    Thread.current[:aspire_budget_configuration] ||= Configuration.new
+  end
+
+  # Overwrite the current configured defaults
+  # @param [AspireBudget::Configuration]
+  def self.configuration=(other)
+    Thread.current[:aspire_budget_configuration] = other
   end
 
   # Resets the set configuration. Useful on e.g. testing
   def self.reset!
-    @configuration = nil
+    Thread.current[:aspire_budget_configuration] = nil
   end
 
   class Configuration

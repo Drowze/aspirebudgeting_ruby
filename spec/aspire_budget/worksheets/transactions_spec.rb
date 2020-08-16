@@ -13,7 +13,7 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
       subject { worksheet_version(version) }
 
       describe '#all' do
-        it 'lists the transactions' do
+        it 'lists the transactions' do # rubocop:disable RSpec/ExampleLength
           expect(subject.all).to contain_exactly(
             an_object_having_attributes(
               account: '💰 Checking',
@@ -96,7 +96,7 @@ RSpec.describe AspireBudget::Worksheets::Transactions do
 
         context 'when trying to insert a transaction object' do
           let(:transaction) do
-            double(**new_record_attributes)
+            instance_double(AspireBudget::Models::Transaction, **new_record_attributes)
           end
 
           before do

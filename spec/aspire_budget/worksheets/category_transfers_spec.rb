@@ -63,7 +63,7 @@ RSpec.describe AspireBudget::Worksheets::CategoryTransfers do
 
         context 'when trying to insert a category_transfer object' do
           let(:category_transfer) do
-            double(**new_record_attributes)
+            instance_double(AspireBudget::Models::CategoryTransfer, **new_record_attributes)
           end
 
           before do

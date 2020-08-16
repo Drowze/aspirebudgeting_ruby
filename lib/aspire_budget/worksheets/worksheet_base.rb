@@ -10,7 +10,7 @@ module AspireBudget
       class << self
         # @return an instance of the current object
         def instance
-          @instance ||= new
+          Thread.current[to_s] ||= new
         end
 
         private
@@ -23,7 +23,7 @@ module AspireBudget
           end
         end
 
-        def respond_to_missing?(method_name, include_private = false)
+        def respond_to_missing?(method_name, _include_private)
           instance.respond_to?(method_name) || super
         end
       end

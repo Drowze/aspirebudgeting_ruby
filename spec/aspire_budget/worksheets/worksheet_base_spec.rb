@@ -10,7 +10,7 @@ RSpec.describe AspireBudget::Worksheets::WorksheetBase do
 
   subject do
     Class.new(described_class) do
-      self::WS_TITLE = 'Dummy'
+      self::WS_TITLE = 'Dummy' # rubocop:disable RSpec/LeakyConstantDeclaration
 
       def all
         ws.rows

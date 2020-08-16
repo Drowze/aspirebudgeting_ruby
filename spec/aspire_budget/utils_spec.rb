@@ -14,7 +14,7 @@ RSpec.describe AspireBudget::Utils do
 
     context 'when value is an object that responds to #to_date' do
       it 'converts it' do
-        object = double(to_date: Date.new(1899, 12, 30))
+        object = instance_double(Time, to_date: Date.new(1899, 12, 30))
         expect(described_class.parse_date(object)).to eq Date.new(1899, 12, 30)
       end
     end
@@ -31,7 +31,7 @@ RSpec.describe AspireBudget::Utils do
         expect { described_class.serialize_date(-1) }.to raise_error('Unsupported date value')
         expect { described_class.serialize_date(Date.new(1899, 12, 29)) }
           .to raise_error('Date should be after 1899-12-30')
-        expect { described_class.serialize_date(double(to_date: Date.new(1899, 12, 29))) }
+        expect { described_class.serialize_date(instance_double(Time, to_date: Date.new(1899, 12, 29))) }
           .to raise_error('Date should be after 1899-12-30')
       end
     end
@@ -47,11 +47,11 @@ RSpec.describe AspireBudget::Utils do
       it 'converts to its serial form' do
         date = Date.new(1899, 12, 30)
         expect(described_class.serialize_date(date)).to be 0.0
-        expect(described_class.serialize_date(double(to_date: date))).to be 0.0
+        expect(described_class.serialize_date(instance_double(Time, to_date: date))).to be 0.0
 
         date = Date.new(1970, 1, 1)
         expect(described_class.serialize_date(date)).to be 25_569.0
-        expect(described_class.serialize_date(double(to_date: date))).to be 25_569.0
+        expect(described_class.serialize_date(instance_double(Time, to_date: date))).to be 25_569.0
       end
     end
   end
