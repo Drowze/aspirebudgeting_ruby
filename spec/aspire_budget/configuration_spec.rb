@@ -29,10 +29,10 @@ RSpec.describe AspireBudget::Configuration do
       AspireBudget.configuration = worksheet_config_for('v3-2-0')
 
       expect { AspireBudget.reset! }
-        .to change { AspireBudget.instance_variable_get(:@configuration) }
+        .to change { Thread.current[:aspire_budget_configuration] }
         .from(an_instance_of(described_class)).to(nil)
       expect { AspireBudget.configuration }
-        .to change { AspireBudget.instance_variable_get(:@configuration) }
+        .to change { Thread.current[:aspire_budget_configuration] }
         .from(nil).to(an_instance_of(described_class))
     end
   end

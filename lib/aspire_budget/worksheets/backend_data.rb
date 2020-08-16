@@ -9,7 +9,7 @@ module AspireBudget
 
       # @return [String] the spreadsheet version
       def version
-        version_column = ws.rows[0].index { |header| header.match?(/Update/) }
+        version_column = ws.rows[0].index { |header| header.include?('Update') }
         ws.rows[1][version_column]
       end
     end

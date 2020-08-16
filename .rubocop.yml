@@ -1,17 +1,45 @@
+require:
+  - 'rubocop-packaging'
+  - 'rubocop-performance'
+  - 'rubocop-rspec'
+  - 'rubocop-thread_safety'
+
 AllCops:
   NewCops: enable
   Exclude:
     - 'bin/console'
+  Include:
+    - '*.gemspec'
+    - 'lib/**/*.rb'
+    - 'spec/**/*.rb'
+    - 'tasks/**/*.rake'
 
 Metrics/AbcSize:
   Max: 20
 
 Metrics/BlockLength:
   Exclude:
+    - '*.gemspec'
     - 'spec/**/*_spec.rb'
 
 Metrics/MethodLength:
   Max: 15
+
+Packaging/RelativeRequireToLib:
+  Include:
+    - 'spec/**/*.rb'
+
+RSpec/ExampleLength:
+  Max: 30
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
 
 Style/Documentation:
   Enabled: false

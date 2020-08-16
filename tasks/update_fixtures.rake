@@ -50,8 +50,8 @@ class ManageFixtures
   end
 
   def file_path(version, title)
-    filename = title.downcase.gsub(' ', '_') + '.json'
-    "#{__dir__}/#{FIXTURES_RELATIVE_PATH}#{version}/#{filename}"
+    file_basename = title.downcase.tr(' ', '_')
+    "#{__dir__}/#{FIXTURES_RELATIVE_PATH}#{version}/#{file_basename}.json"
   end
 
   def fixture_for(worksheet)

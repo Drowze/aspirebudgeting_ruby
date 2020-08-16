@@ -6,8 +6,8 @@ module GoogleApiMock
       FIXTURES_PATH = "#{__dir__}/../../support/fixtures/"
 
       def load_data(version)
-        @load_data ||= {}
-        @load_data[version] ||= fixtures_available_for(version).map do |fixture_name|
+        Thread.current[to_s] ||= {}
+        Thread.current[to_s][version] ||= fixtures_available_for(version).map do |fixture_name|
           {
             sheet_title: sheet_title(fixture_name),
             fixture: load_fixture(version, "#{fixture_name}.json"),
@@ -31,7 +31,7 @@ module GoogleApiMock
 
       def fixtures_available_for(version)
         Dir.glob("#{FIXTURES_PATH}/#{version}/*.json")
-           .reject { |f| f.match?(/_properties\.json/) }
+           .reject { |f| f.include?('properties.json') }
            .map { |f| File.basename(f, '.json') }
       end
     end
