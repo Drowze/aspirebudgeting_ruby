@@ -3,5 +3,5 @@
 module AspireBudget
   # Full release version.
   # @return [String]
-  VERSION = '0.0.1'
+  VERSION = '0.0.2'
 end
