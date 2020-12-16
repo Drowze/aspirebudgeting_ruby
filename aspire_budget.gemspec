@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   DESCRIPTION
   spec.homepage      = 'https://github.com/drowze/aspirebudgeting_ruby'
   spec.license       = 'MIT'
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.5.0')
 
   spec.metadata = {
     'homepage_uri' => spec.homepage,
@@ -39,6 +39,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop-performance', '~> 1.7.1'
   spec.add_development_dependency 'rubocop-rspec', '~> 1.42.0'
   spec.add_development_dependency 'rubocop-thread_safety', '~> 0.4.1'
-  spec.add_development_dependency 'simplecov', '~> 0.17.0'
+  spec.add_development_dependency 'simplecov', '~> 0.20.0'
   spec.add_development_dependency 'webmock'
 end
