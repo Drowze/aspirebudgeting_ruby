@@ -30,10 +30,6 @@ jobs:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: bundle exec rspec --format progress
-      - name: Publish coverage on Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          file: coverage/coverage.json
 
   test_multipe_versions:
     name: >-

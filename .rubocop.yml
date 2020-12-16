@@ -1,6 +1,7 @@
 require:
   - 'rubocop-packaging'
   - 'rubocop-performance'
+  - 'rubocop-rake'
   - 'rubocop-rspec'
   - 'rubocop-thread_safety'
 
@@ -26,9 +27,12 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Max: 15
 
-Packaging/RelativeRequireToLib:
+Packaging/RequireHardcodingLib:
   Include:
     - 'spec/**/*.rb'
+
+Performance/MethodObjectAsBlock:
+  Enabled: false
 
 RSpec/ExampleLength:
   Max: 30
