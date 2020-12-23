@@ -7,8 +7,8 @@ jobs:
     name: Build, test and coverage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.1
-      - uses: ruby/setup-ruby@v1.39.0
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
       - name: Install dependencies
@@ -25,16 +25,11 @@ jobs:
           GOOGLE_PRIVATE_KEY: ${{ secrets.GOOGLE_PRIVATE_KEY }}
         run: bundle exec rake fixtures:validate
       - name: Run RSpec and publish coverage on Code Climate
-        uses: paambaati/codeclimate-action@v2.6.0
+        uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: bundle exec rspec --format progress
-          coverageLocations: coverage/.resultset.json:simplecov
-      - name: Publish coverage on Codecov
-        uses: codecov/codecov-action@v1.0.10
-        with:
-          file: coverage/.resultset.json
 
   test_multipe_versions:
     name: >-
@@ -43,13 +38,13 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu, macos]
-        ruby: [2.4, 2.5, 2.6, 2.7]
+        ruby: [2.5, 2.6, 2.7]
         exclude:
           - os: ubuntu
             ruby: 2.7
     steps:
-      - uses: actions/checkout@v2.3.1
-      - uses: ruby/setup-ruby@v1.39.0
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
       - name: Install dependencies

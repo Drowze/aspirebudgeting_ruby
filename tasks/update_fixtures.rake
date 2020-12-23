@@ -23,10 +23,12 @@ class ManageFixtures
 
   def initialize
     namespace :fixtures do
+      desc 'Update fixtures'
       task :update do
         SPREADSHEET_KEYS.each_key(&method(:update_fixtures))
       end
 
+      desc 'Validate current fixtures'
       task :validate do
         SPREADSHEET_KEYS.each_key(&method(:validate_fixtures))
       end
