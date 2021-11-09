@@ -1,5 +1,7 @@
 # Aspire Budget - Ruby
 
+test
+
 [![CI Status](https://github.com/drowze/aspirebudgeting_ruby/workflows/CI/badge.svg)](https://github.com/drowze/aspirebudgeting_ruby)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop-hq/rubocop)
 <!-- [![codecov](https://codecov.io/gh/Drowze/aspirebudgeting_ruby/branch/master/graph/badge.svg)](https://codecov.io/gh/Drowze/aspirebudgeting_ruby) -->
